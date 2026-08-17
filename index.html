@@ -1,79 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Sanuu! ❤️</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #333;
-      text-align: center;
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px 20px;
-      margin: 20px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      max-width: 400px;
-      width: 100%;
-    }
-    h1 {
-      color: #e91e63;
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #555;
-    }
-    .heart {
-      font-size: 3rem;
-      animation: pulse 1.5s infinite;
-      margin: 15px 0;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-    .wish-box {
-      background: #ffe6ed;
-      border-left: 4px solid #e91e63;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-style: italic;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sanuu! ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: #8b0046;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: #ffb3d1;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .wish-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid #ff66a3;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0 20px 0;
+            font-style: italic;
+            max-width: 320px;
+            font-size: 0.95rem;
+        }
+
+        /* Cake & Candle Setup */
+        .cake-container {
+            position: relative;
+            width: 150px;
+            height: 140px;
+            margin: 10px 0 30px 0;
+            cursor: pointer;
+            touch-action: none;
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 0;
+            width: 150px;
+            height: 80px;
+            background: #ff66a3;
+            border-radius: 10px 10px 0 0;
+            box-shadow: inset 0 12px 0 #fff, inset 0 24px 0 #ff3385;
+        }
+
+        .candle {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 35px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff3385 5px, #ff3385 10px);
+            border-radius: 3px;
+        }
+
+        .flame {
+            position: absolute;
+            bottom: 115px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 24px;
+            background: orange;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 10px orange, 0 0 20px yellow;
+            animation: flicker 0.6s infinite alternate;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        .flame.out {
+            opacity: 0;
+            animation: none;
+        }
+
+        .swipe-hint {
+            font-size: 0.85rem;
+            color: #ffb3d1;
+            margin-bottom: 20px;
+        }
+
+        /* Heart Grid Setup */
+        .heart-grid {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto 40px auto;
+        }
+
+        .heart-photo {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+            clip-path: path("M 37.5 67.5 C 37.5 67.5 5 45 5 25 A 16.25 16.25 0 0 1 37.5 16.25 A 16.25 16.25 0 0 1 70 25 C 70 45 37.5 67.5 37.5 67.5 Z");
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Position photos to map out a larger heart outline */
+        .p1 { top: 10px; left: 55px; }
+        .p2 { top: 10px; right: 55px; }
+        .p3 { top: 80px; left: 10px; }
+        .p4 { top: 80px; right: 10px; }
+        .p5 { top: 155px; left: 55px; }
+        .p6 { top: 155px; right: 55px; }
+    </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="heart">💖</div>
     <h1>Happy Birthday Sanuu! 🎉</h1>
     
     <div class="wish-box">
-      <p>Wishing you the happiest birthday filled with lots of love, joy, and laughter! You deserve all the happiness in the world. ❤️</p>
+        Wishing you the happiest birthday filled with lots of love, joy, and laughter! You deserve all the happiness in the world. ❤️
     </div>
-  </div>
-  <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
-  <img src="photo1.jpg" style="width: 100%; border-radius: 12px;">
-  <img src="photo2.jpg" style="width: 100%; border-radius: 12px;">
-  <img src="photo3.jpg" style="width: 100%; border-radius: 12px;">
-  <img src="photo4.jpg" style="width: 100%; border-radius: 12px;">
-  <img src="photo5.jpg" style="width: 100%; border-radius: 12px;">
-  <img src="photo6.jpg" style="width: 100%; border-radius: 12px;">
-  </div>q
 
+    <!-- Interactive Cake -->
+    <div class="cake-container" id="cakeContainer">
+        <div class="flame" id="flame"></div>
+        <div class="candle"></div>
+        <div class="cake"></div>
+    </div>
+    <div class="swipe-hint">Swipe across the candle to blow it out! 🌬️</div>
+
+    <!-- Heart Arrangement -->
+    <div class="heart-grid">
+        <img src="photo1.jpg" class="heart-photo p1" alt="Photo 1">
+        <img src="photo2.jpg" class="heart-photo p2" alt="Photo 2">
+        <img src="photo3.jpg" class="heart-photo p3" alt="Photo 3">
+        <img src="photo4.jpg" class="heart-photo p4" alt="Photo 4">
+        <img src="photo5.jpg" class="heart-photo p5" alt="Photo 5">
+        <img src="photo6.jpg" class="heart-photo p6" alt="Photo 6">
+    </div>
+
+    <script>
+        const flame = document.getElementById('flame');
+        const cakeContainer = document.getElementById('cakeContainer');
+        let startX = 0;
+
+        // Detect touch/swipe gesture across candle
+        cakeContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        cakeContainer.addEventListener('touchmove', (e) => {
+            let moveX = e.touches[0].clientX;
+            if (Math.abs(moveX - startX) > 30) {
+                flame.classList.add('out');
+            }
+        });
+
+        // Tap fallback for desktop/mouse
+        cakeContainer.addEventListener('click', () => {
+            flame.classList.add('out');
+        });
+    </script>
 </body>
 </html>
