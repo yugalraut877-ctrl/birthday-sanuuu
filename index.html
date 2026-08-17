@@ -3,29 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday!</title>
+    <title>Happy Birthday Sanuu!</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Courier New', monospace; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        body { background: #000; color: #fff; font-family: 'Courier New', monospace; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+        
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .container { position: relative; z-index: 2; text-align: center; width: 100%; max-width: 600px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        /* Rotate Screen Prompt */
+        .rotate-hint { position: fixed; top: 10px; color: #ff2a85; font-size: 0.9rem; z-index: 10; background: rgba(0,0,0,0.8); padding: 8px 15px; border-radius: 20px; border: 1px solid #ff2a85; display: block; }
+
+        /* Birthday Cake CSS */
+        .cake-box { cursor: pointer; text-align: center; animation: fadeIn 1s ease-in; }
+        .cake { position: relative; width: 140px; height: 100px; background: #f48fb1; border-radius: 10px 10px 0 0; margin: 40px auto 0; box-shadow: inset 0 12px 0 #f06292, inset 0 24px 0 #fff; }
+        .cake::before { content: ''; position: absolute; bottom: -15px; left: -10px; width: 160px; height: 15px; background: #ad1457; border-radius: 5px; }
+        .candle { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); width: 12px; height: 35px; background: #fff; border-radius: 3px; }
+        .flame { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); width: 14px; height: 20px; background: #ff9800; border-radius: 50% 50% 20% 20%; box-shadow: 0 0 12px #ffeb3b; animation: flicker 0.3s infinite alternate; }
+        .flame.off { display: none; }
         
-        .container { position: relative; z-index: 2; text-align: center; width: 100%; max-width: 500px; padding: 20px; }
-        
-        /* Text Animations */
-        .matrix-text { font-size: 3rem; font-weight: bold; color: #ff2a85; text-shadow: 0 0 10px #ff2a85; opacity: 0; transition: opacity 0.5s ease; }
-        
-        /* Interactive Card Flip */
-        .card-container { perspective: 1000px; display: none; margin: 20px auto; width: 280px; height: 360px; cursor: pointer; }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* Matrix Text */
+        .matrix-text { font-size: 3.5rem; font-weight: bold; color: #ff2a85; text-shadow: 0 0 15px #ff2a85; opacity: 0; transition: opacity 0.5s ease; display: none; }
+
+        /* Interactive Card */
+        .card-container { perspective: 1000px; display: none; margin: 0 auto; width: 320px; height: 220px; cursor: pointer; }
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s; }
         .card.flipped { transform: rotateY(180deg); }
-        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-shadow: 0 0 20px rgba(255,42,133,0.5); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-shadow: 0 0 20px rgba(255,42,133,0.6); }
         .card-front { background: #fff; color: #000; }
         .card-back { background: rgba(20, 20, 20, 0.95); border: 2px solid #ff2a85; color: #fff; transform: rotateY(180deg); }
-        
-        /* Heart Grid Container */
-        .heart-grid { display: none; position: relative; width: 320px; height: 320px; margin: 0 auto; }
-        .heart-photo { position: absolute; width: 70px; height: 70px; object-fit: cover; border-radius: 50%; border: 2px solid #ff2a85; box-shadow: 0 0 10px #ff2a85; animation: popIn 0.5s ease forwards; }
-        
+
+        /* Heart Grid (Horizontal Optimized) */
+        .heart-grid { display: none; position: relative; width: 480px; height: 260px; margin: 0 auto; }
+        .heart-photo { position: absolute; width: 65px; height: 65px; object-fit: cover; border-radius: 50%; border: 2px solid #ff2a85; box-shadow: 0 0 10px #ff2a85; animation: popIn 0.5s ease forwards; }
+
         @keyframes popIn {
             0% { transform: scale(0); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
@@ -34,28 +50,42 @@
 </head>
 <body>
 
+<div class="rotate-hint">🔄 Turn screen horizontally for best view!</div>
 <canvas id="matrix"></canvas>
 
 <div class="container">
-    <div id="text-display" class="matrix-text"></div>
-
-    <div id="card-container" class="card-container" onclick="flipCard()">
-        <div class="card" id="card">
-            <div class="card-front">
-                <span style="font-size: 50px;">💌</span>
-                <p style="margin-top: 15px; font-weight: bold;">Tap to Open</p>
-            </div>
-            <div class="card-back">
-                <p style="font-size: 1.1rem; line-height: 1.5;">Happy Birthday Sanuu! ❤️<br><br>As long as you're smiling, I'm happy. Stay happy, my love.</p>
+    <!-- Cake Scene -->
+    <div id="cake-box" class="cake-box" onclick="blowCandle()">
+        <p style="color: #ff2a85; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px;">Tap the candle to blow it out! 🎂</p>
+        <div class="cake">
+            <div class="candle">
+                <div id="flame" class="flame"></div>
             </div>
         </div>
     </div>
 
+    <!-- Countdown Text -->
+    <div id="text-display" class="matrix-text"></div>
+
+    <!-- Birthday Card -->
+    <div id="card-container" class="card-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-front">
+                <span style="font-size: 40px;">💌</span>
+                <p style="margin-top: 10px; font-weight: bold;">Tap to Open</p>
+            </div>
+            <div class="card-back">
+                <p style="font-size: 1rem; line-height: 1.4;">Happy Birthday Sanuu! ❤️<br><br>As long as you're smiling, I'm happy. Stay happy, my love.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Heart Gallery -->
     <div id="heart-grid" class="heart-grid"></div>
 </div>
 
 <script>
-    // Matrix Rain Animation
+    // Matrix Rain Effect
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -83,7 +113,21 @@
     }
     setInterval(drawMatrix, 33);
 
-    // Sequence Controller
+    // Flow sequence setup
+    let candleBlown = false;
+    function blowCandle() {
+        if (candleBlown) return;
+        candleBlown = true;
+        
+        document.getElementById('flame').classList.add('off');
+        
+        setTimeout(() => {
+            document.getElementById('cake-box').style.display = 'none';
+            document.getElementById('text-display').style.display = 'block';
+            runSequence();
+        }, 1200);
+    }
+
     const textDisplay = document.getElementById('text-display');
     const cardContainer = document.getElementById('card-container');
     const heartGrid = document.getElementById('heart-grid');
@@ -99,17 +143,15 @@
             setTimeout(() => {
                 textDisplay.style.opacity = '0';
                 seqIndex++;
-                setTimeout(runSequence, 400);
-            }, 1000);
+                setTimeout(runSequence, 300);
+            }, 900);
         } else {
             textDisplay.style.display = 'none';
             cardContainer.style.display = 'block';
         }
     }
 
-    setTimeout(runSequence, 1000);
-
-    // Image Links
+    // Photo URLs
     const photoUrls = [
         "https://i.ibb.co/9HFyhzzF/IMG-20251206-130940.jpg",
         "https://i.ibb.co/fGB4dbK1/IMG-20251206-131819.jpg",
@@ -118,16 +160,16 @@
         "https://i.ibb.co/CXcbMzy/IMG-20260120-135712.jpg"
     ];
 
-    // Heart Coordinates Layout
+    // Horizontal Heart Layout Coordinates
     const heartPositions = [
-        { top: '20px', left: '125px' },
-        { top: '60px', left: '60px' },
-        { top: '60px', left: '190px' },
-        { top: '130px', left: '20px' },
-        { top: '130px', left: '230px' },
-        { top: '210px', left: '70px' },
-        { top: '210px', left: '180px' },
-        { top: '270px', left: '125px' }
+        { top: '10px', left: '210px' },
+        { top: '40px', left: '130px' },
+        { top: '40px', left: '290px' },
+        { top: '100px', left: '70px' },
+        { top: '100px', left: '350px' },
+        { top: '160px', left: '130px' },
+        { top: '160px', left: '290px' },
+        { top: '210px', left: '210px' }
     ];
 
     let isFlipped = false;
@@ -141,7 +183,6 @@
                 cardContainer.style.display = 'none';
                 heartGrid.style.display = 'block';
                 
-                // Populate heart photos dynamically
                 heartPositions.forEach((pos, index) => {
                     const img = document.createElement('img');
                     img.src = photoUrls[index % photoUrls.length];
