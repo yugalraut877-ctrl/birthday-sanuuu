@@ -3,174 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Sanuu! ❤️</title>
+    <title>Happy Birthday!</title>
     <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Arial', sans-serif;
-            background: #8b0046;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #fff;
-            text-align: center;
-            overflow-x: hidden;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: 'Courier New', monospace; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        
+        .container { position: relative; z-index: 2; text-align: center; width: 100%; max-width: 500px; padding: 20px; }
+        
+        /* Text Animations */
+        .matrix-text { font-size: 3rem; font-weight: bold; color: #ff2a85; text-shadow: 0 0 10px #ff2a85; opacity: 0; transition: opacity 0.5s ease; }
+        
+        /* Interactive Card Flip */
+        .card-container { perspective: 1000px; display: none; margin: 20px auto; width: 280px; height: 360px; cursor: pointer; }
+        .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s; }
+        .card.flipped { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-shadow: 0 0 20px rgba(255,42,133,0.5); }
+        .card-front { background: #fff; color: #000; }
+        .card-back { background: rgba(20, 20, 20, 0.95); border: 2px solid #ff2a85; color: #fff; transform: rotateY(180deg); }
+        
+        /* Heart Grid Container */
+        .heart-grid { display: none; position: relative; width: 320px; height: 320px; margin: 0 auto; }
+        .heart-photo { position: absolute; width: 70px; height: 70px; object-fit: cover; border-radius: 50%; border: 2px solid #ff2a85; box-shadow: 0 0 10px #ff2a85; animation: popIn 0.5s ease forwards; }
+        
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
-
-        h1 {
-            color: #ffb3d1;
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        .wish-box {
-            background: rgba(255, 255, 255, 0.15);
-            border-left: 4px solid #ff66a3;
-            padding: 12px 18px;
-            border-radius: 8px;
-            margin: 10px 0 20px 0;
-            font-style: italic;
-            max-width: 320px;
-            font-size: 0.95rem;
-        }
-
-        /* Cake & Candle Setup */
-        .cake-container {
-            position: relative;
-            width: 150px;
-            height: 140px;
-            margin: 10px 0 30px 0;
-            cursor: pointer;
-            touch-action: none;
-        }
-
-        .cake {
-            position: absolute;
-            bottom: 0;
-            width: 150px;
-            height: 80px;
-            background: #ff66a3;
-            border-radius: 10px 10px 0 0;
-            box-shadow: inset 0 12px 0 #fff, inset 0 24px 0 #ff3385;
-        }
-
-        .candle {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 35px;
-            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff3385 5px, #ff3385 10px);
-            border-radius: 3px;
-        }
-
-        .flame {
-            position: absolute;
-            bottom: 115px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 24px;
-            background: orange;
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 10px orange, 0 0 20px yellow;
-            animation: flicker 0.6s infinite alternate;
-            transition: opacity 0.5s ease;
-        }
-
-        @keyframes flicker {
-            0% { transform: translateX(-50%) scale(1); }
-            100% { transform: translateX(-50%) scale(1.1); }
-        }
-
-        .flame.out {
-            opacity: 0;
-            animation: none;
-        }
-
-        .swipe-hint {
-            font-size: 0.85rem;
-            color: #ffb3d1;
-            margin-bottom: 20px;
-        }
-
-        /* Heart Grid Setup */
-        .heart-grid {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 20px auto 40px auto;
-        }
-
-        .heart-photo {
-            position: absolute;
-            width: 75px;
-            height: 75px;
-            object-fit: cover;
-            clip-path: path("M 37.5 67.5 C 37.5 67.5 5 45 5 25 A 16.25 16.25 0 0 1 37.5 16.25 A 16.25 16.25 0 0 1 70 25 C 70 45 37.5 67.5 37.5 67.5 Z");
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-
-        /* Position photos to map out a larger heart outline */
-        .p1 { top: 10px; left: 55px; }
-        .p2 { top: 10px; right: 55px; }
-        .p3 { top: 80px; left: 10px; }
-        .p4 { top: 80px; right: 10px; }
-        .p5 { top: 155px; left: 55px; }
-        .p6 { top: 155px; right: 55px; }
     </style>
 </head>
 <body>
 
-    <h1>Happy Birthday Sanuu! 🎉</h1>
-    
-    <div class="wish-box">
-        Wishing you the happiest birthday filled with lots of love, joy, and laughter! You deserve all the happiness in the world. ❤️
+<canvas id="matrix"></canvas>
+
+<div class="container">
+    <div id="text-display" class="matrix-text"></div>
+
+    <div id="card-container" class="card-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-front">
+                <span style="font-size: 50px;">💌</span>
+                <p style="margin-top: 15px; font-weight: bold;">Tap to Open</p>
+            </div>
+            <div class="card-back">
+                <p style="font-size: 1.1rem; line-height: 1.5;">Happy Birthday Sanuu! ❤️<br><br>As long as you're smiling, I'm happy. Stay happy, my love.</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Interactive Cake -->
-    <div class="cake-container" id="cakeContainer">
-        <div class="flame" id="flame"></div>
-        <div class="candle"></div>
-        <div class="cake"></div>
-    </div>
-    <div class="swipe-hint">Swipe across the candle to blow it out! 🌬️</div>
+    <div id="heart-grid" class="heart-grid"></div>
+</div>
 
-    <!-- Heart Arrangement -->
-    <div class="heart-grid">
-    <img src="photo1.jpg" class="heart-photo p1" alt="Photo 1">
-    <img src="https://i.ibb.co/9HFyhzzF/IMG-20251206-130940.jpg" class="heart-photo p2" alt="Photo 2">
-    <img src="https://i.ibb.co/fGB4dbK1/IMG-20251206-131819.jpg" class="heart-photo p3" alt="Photo 3">
-    <img src="https://i.ibb.co/0R1JwqY0/IMG-20251017-175214.jpg" class="heart-photo p4" alt="Photo 4">
-    <img src="https://i.ibb.co/nq86nDxQ/IMG-20260120-135043.jpg" class="heart-photo p5" alt="Photo 5">
-    <img src="https://i.ibb.co/CXcbMzy/IMG-20260120-135712.jpg" class="heart-photo p6" alt="Photo 6">
-    </div>
+<script>
+    // Matrix Rain Animation
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    <script>
-        const flame = document.getElementById('flame');
-        const cakeContainer = document.getElementById('cakeContainer');
-        let startX = 0;
+    const chars = '0123456789ABCDEF♥💕✨';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
 
-        // Detect touch/swipe gesture across candle
-        cakeContainer.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-        });
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ff2a85';
+        ctx.font = fontSize + 'px monospace';
 
-        cakeContainer.addEventListener('touchmove', (e) => {
-            let moveX = e.touches[0].clientX;
-            if (Math.abs(moveX - startX) > 30) {
-                flame.classList.add('out');
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
             }
-        });
+            drops[i]++;
+        }
+    }
+    setInterval(drawMatrix, 33);
 
-        // Tap fallback for desktop/mouse
-        cakeContainer.addEventListener('click', () => {
-            flame.classList.add('out');
-        });
-    </script>
+    // Sequence Controller
+    const textDisplay = document.getElementById('text-display');
+    const cardContainer = document.getElementById('card-container');
+    const heartGrid = document.getElementById('heart-grid');
+
+    const sequence = ['3', '2', '1', 'HAPPY', 'BIRTHDAY', 'TO', 'SANUU', '❤️'];
+    let seqIndex = 0;
+
+    function runSequence() {
+        if (seqIndex < sequence.length) {
+            textDisplay.innerText = sequence[seqIndex];
+            textDisplay.style.opacity = '1';
+            
+            setTimeout(() => {
+                textDisplay.style.opacity = '0';
+                seqIndex++;
+                setTimeout(runSequence, 400);
+            }, 1000);
+        } else {
+            textDisplay.style.display = 'none';
+            cardContainer.style.display = 'block';
+        }
+    }
+
+    setTimeout(runSequence, 1000);
+
+    // Image Links
+    const photoUrls = [
+        "https://i.ibb.co/9HFyhzzF/IMG-20251206-130940.jpg",
+        "https://i.ibb.co/fGB4dbK1/IMG-20251206-131819.jpg",
+        "https://i.ibb.co/0R1JwqY0/IMG-20251017-175214.jpg",
+        "https://i.ibb.co/nq86nDxQ/IMG-20260120-135043.jpg",
+        "https://i.ibb.co/CXcbMzy/IMG-20260120-135712.jpg"
+    ];
+
+    // Heart Coordinates Layout
+    const heartPositions = [
+        { top: '20px', left: '125px' },
+        { top: '60px', left: '60px' },
+        { top: '60px', left: '190px' },
+        { top: '130px', left: '20px' },
+        { top: '130px', left: '230px' },
+        { top: '210px', left: '70px' },
+        { top: '210px', left: '180px' },
+        { top: '270px', left: '125px' }
+    ];
+
+    let isFlipped = false;
+    function flipCard() {
+        const card = document.getElementById('card');
+        card.classList.toggle('flipped');
+        
+        if (!isFlipped) {
+            isFlipped = true;
+            setTimeout(() => {
+                cardContainer.style.display = 'none';
+                heartGrid.style.display = 'block';
+                
+                // Populate heart photos dynamically
+                heartPositions.forEach((pos, index) => {
+                    const img = document.createElement('img');
+                    img.src = photoUrls[index % photoUrls.length];
+                    img.className = 'heart-photo';
+                    img.style.top = pos.top;
+                    img.style.left = pos.left;
+                    img.style.animationDelay = (index * 0.15) + "s";
+                    heartGrid.appendChild(img);
+                });
+            }, 2500);
+        }
+    }
+</script>
+
 </body>
 </html>
