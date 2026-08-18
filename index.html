@@ -15,14 +15,12 @@
       height: 100vh;
       width: 100vw;
       text-align: center;
-
-      /* FLEXBOX CENTERING PREVENTS TRANSFORM SHAKING */
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    /* Pink Matrix Canvas Background */
+    /* Matrix Canvas Background */
     #matrix-canvas {
       position: fixed;
       top: 0;
@@ -31,6 +29,18 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
+    }
+
+    /* ISOLATED PHOTO RAIN CONTAINER (PREVENTS PAGE LAYOUT SHIFTS) */
+    #photo-rain-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
     }
 
     /* 3-2-1 Intro Splash */
@@ -130,9 +140,9 @@
       font-weight: bold;
     }
 
-    /* HARD FIXED LETTER CARD WITH GPU HARDWARE ACCELERATION */
+    /* COMPLETELY FROZEN LETTER CARD */
     #locked-letter-card {
-      position: relative; /* Positioned by body flexbox, not transform */
+      position: relative;
       width: 85%;
       max-width: 420px;
       max-height: 75vh;
@@ -146,11 +156,10 @@
       display: none;
       box-sizing: border-box;
 
-      /* HARDWARE ISOLATION TO STOP SHAKING */
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
+      /* Hardware layer separation */
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      contain: layout style paint;
     }
 
     .lock-icon-btn {
@@ -161,7 +170,7 @@
       user-select: none;
     }
 
-    /* STABLE INNER SCROLLING */
+    /* Inner Scrollable Message */
     #letter-content {
       display: none;
       color: #fff0f3;
@@ -172,7 +181,7 @@
       margin-top: 15px;
       max-height: 50vh;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch; /* Smooth iOS scroll */
+      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
 
@@ -180,7 +189,7 @@
       display: none;
     }
 
-    /* Photo Rain */
+    /* Photo Rain Styles */
     .polaroid {
       position: absolute;
       background: #ffffff;
@@ -191,7 +200,7 @@
       width: 130px;
       pointer-events: none;
       animation: fall linear infinite;
-      z-index: 2;
+      will-change: transform;
     }
 
     .polaroid img {
@@ -210,13 +219,13 @@
     }
 
     @keyframes fall {
-      0% { transform: translateY(-150px) rotate(0deg); opacity: 0; }
+      0% { transform: translateY(-180px) rotate(0deg); opacity: 0; }
       10% { opacity: 1; }
       90% { opacity: 1; }
-      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Sparkles Effect */
+    /* Sparkles */
     .sparkle-heart {
       position: fixed;
       pointer-events: none;
@@ -234,8 +243,11 @@
 </head>
 <body>
 
-  <!-- MATRIX CODE RAIN BACKGROUND -->
+  <!-- MATRIX BACKGROUND -->
   <canvas id="matrix-canvas"></canvas>
+
+  <!-- ISOLATED PHOTO RAIN CONTAINER -->
+  <div id="photo-rain-container"></div>
 
   <!-- 3-2-1 INTRO SPLASH -->
   <div id="splash-screen">
@@ -427,6 +439,7 @@
     ];
 
     function createPolaroid() {
+      const rainContainer = document.getElementById('photo-rain-container');
       const polaroid = document.createElement('div');
       polaroid.className = 'polaroid';
 
@@ -444,7 +457,8 @@
       const duration = Math.random() * 4 + 6;
       polaroid.style.animationDuration = duration + 's';
 
-      document.body.appendChild(polaroid);
+      // APPEND TO SEPARATE CONTAINER INSTEAD OF BODY
+      rainContainer.appendChild(polaroid);
 
       setTimeout(() => {
         polaroid.remove();
