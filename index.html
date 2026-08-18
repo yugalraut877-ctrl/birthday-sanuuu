@@ -269,8 +269,9 @@
 </head>
 <body>
 
-  <!-- BACKGROUND MUSIC WITH ONLINE MP3 LINK -->
+  <!-- BACKGROUND MUSIC USING RELIABLE AUDIO STREAM SOURCE -->
   <audio id="bg-music" loop preload="auto">
+    <source src="https://actions.google.com/sounds/v1/ambiences/romantic_music.ogg" type="audio/ogg">
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a8c278.mp3" type="audio/mpeg">
   </audio>
 
@@ -282,7 +283,7 @@
 
   <!-- 3-2-1 INTRO SPLASH -->
   <div id="splash-screen">
-    <div class="splash-title">Get ready mero Sanuu... 🥹❤️</div>
+    <div class="splash-title">Get ready Sanuu... 🥹😘</div>
     <div id="countdown-number">3</div>
   </div>
 
@@ -311,7 +312,7 @@
         <div class="cake-hint" id="cake-hint-text">Tap the cake to make a wish & blow out candles! ✨</div>
       </div>
 
-      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center; margin-top:0;">Happy Birthday, My Sanuu! 🥹❤️</p>
+      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center; margin-top:0;">Happy Birthday, My Bubu, Sanuu! 🥹😘</p>
       
       <p>My dearest Sanuu,</p>
       
@@ -422,12 +423,14 @@
     envelopeBtnElement.addEventListener('click', () => {
       envelopeScreen.style.display = 'none';
       
-      // Force play audio cleanly via event listener
+      // Force audio playback execution on interaction
       const music = document.getElementById('bg-music');
       if (music) {
-        music.load();
-        music.play().catch(error => {
-          console.log("Audio play blocked:", error);
+        music.volume = 1.0;
+        music.play().then(() => {
+          console.log("Audio playing successfully!");
+        }).catch(error => {
+          console.log("Autoplay constraint error:", error);
         });
       }
 
