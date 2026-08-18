@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday To You Sanuu! 😚</title>
+  <title>Happy Birthday To You Sanuu! ❤️</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,17 +35,18 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* Interactive Cake */
+    /* Interactive Emoji Cake */
     .cake-box { display: none; cursor: pointer; text-align: center; margin-top: 20px; }
-    .cake { position: relative; width: 140px; height: 100px; background: #f48fb1; border-radius: 10px 10px 0 0; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    .cake::before { content: ''; position: absolute; bottom: -15px; left: -10px; width: 160px; height: 15px; background: #ad1457; border-radius: 10px; }
-    .candle { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); width: 12px; height: 35px; background: #fff; border-radius: 3px; }
-    .flame { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); width: 14px; height: 20px; background: #ff9800; border-radius: 50% 50% 20% 20%; animation: flicker 0.6s infinite alternate; box-shadow: 0 0 10px #ffeb3b; }
-    .flame.off { display: none; }
+    .cake-emoji {
+      font-size: 7rem;
+      display: inline-block;
+      animation: bounce 1.5s infinite alternate;
+      user-select: none;
+    }
 
-    @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1); }
-      100% { transform: translateX(-50%) scale(1.1); }
+    @keyframes bounce {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-15px) scale(1.05); }
     }
 
     /* Floating Photo Rain */
@@ -88,12 +89,8 @@
     <div id="text-display" class="big-text">3</div>
 
     <div id="cake-box" class="cake-box" onclick="blowCandle()">
-      <p style="color: #ff2a85; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px;">Tap the candle to blow it out! 🎂</p>
-      <div class="cake">
-        <div class="candle">
-          <div class="flame" id="flame"></div>
-        </div>
-      </div>
+      <p style="color: #ff2a85; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px;">Tap the cake! 🎂</p>
+      <div class="cake-emoji">🎂</div>
     </div>
   </div>
 
@@ -106,20 +103,17 @@
 
     let started = false;
 
-    // Starts countdown immediately, audio plays on first touch/interaction
     function init() {
       if (!started) {
         started = true;
         const audio = document.getElementById('bg-music');
         audio.play().catch(() => {});
-        startCountdown();
       }
     }
 
     document.body.addEventListener('click', init);
     document.body.addEventListener('touchstart', init);
 
-    // Auto start countdown immediately on load
     window.onload = () => {
       startCountdown();
     };
@@ -127,7 +121,7 @@
     const textDisplay = document.getElementById('text-display');
 
     function startCountdown() {
-      const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "YOU", "SANUU! 😚"];
+      const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "YOU", "SANUU! ❤️"];
       let index = 0;
 
       const interval = setInterval(() => {
@@ -143,13 +137,12 @@
     }
 
     function blowCandle() {
-      document.getElementById('flame').classList.add('off');
       confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 } });
 
       setTimeout(() => {
         document.getElementById('cake-box').style.display = 'none';
         startPhotoRain();
-      }, 1200);
+      }, 800);
     }
 
     function startPhotoRain() {
@@ -173,7 +166,7 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const chars = 'SANUUUHAPPYBIRTHDAYTOYOU1234567890😚';
+    const chars = 'SANUUUHAPPYBIRTHDAYTOYOU1234567890❤️';
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
