@@ -43,25 +43,6 @@
       overflow: hidden;
     }
 
-    /* Floating Music Fallback Button */
-    #music-toggle-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(25, 15, 35, 0.9);
-      border: 2px solid #ff758f;
-      color: #ff758f;
-      padding: 10px 16px;
-      border-radius: 30px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 20000;
-      box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
-      backdrop-filter: blur(5px);
-      display: none;
-    }
-
     /* 3-2-1 Intro Splash */
     #splash-screen {
       position: fixed;
@@ -289,14 +270,6 @@
 </head>
 <body>
 
-  <!-- BACKGROUND MUSIC AUDIO ELEMENT -->
-  <audio id="bg-music" loop preload="auto">
-    <source src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" type="audio/ogg">
-  </audio>
-
-  <!-- Floating Music Toggle Button -->
-  <button id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Music</button>
-
   <!-- MATRIX BACKGROUND -->
   <canvas id="matrix-canvas"></canvas>
 
@@ -320,7 +293,7 @@
     <div class="envelope-hint">Tap the letter Sanuu! 🥹</div>
   </div>
 
-  <!-- LOCKED LOVE LETTER CARD -->
+  <!-- LOCKED LOVE LETTER CARD WITH BULLETPROOF VISIBLE AUDIO PLAYER -->
   <div id="locked-letter-card">
     <div id="lock-header">
       <div class="lock-icon-btn" id="lock-btn" onclick="unlockMessage()">🔒</div>
@@ -328,6 +301,15 @@
     </div>
 
     <div id="letter-content">
+      <!-- NATIVE CONTROLS GUARANTEED MOBILE MUSIC PLAYER -->
+      <div style="background: rgba(255,117,143,0.15); border: 1px solid #ff758f; padding: 10px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
+        <p style="margin: 0 0 8px 0; font-size: 13px; color: #ffb3c1; font-family: sans-serif; font-weight: bold;">🎵 Tap play for your birthday song:</p>
+        <audio controls loop style="width: 100%; height: 35px;">
+          <source src="https://docs.google.com/uc?export=download&id=1Dt6h_QdbhdgK5yf_L_cizzz8DzHJLSjc" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
       <!-- ANIMATED BIRTHDAY CAKE SECTION -->
       <div class="cake-container" onclick="blowCandle()">
         <div class="cake-emoji" id="cake-display">🎂</div>
@@ -432,46 +414,22 @@
       showNextWord();
     }
 
-    // 4. Step 3: Bring Envelope 💌 Screen & Show Music Button
+    // 4. Step 3: Bring Envelope 💌 Screen
     const envelopeScreen = document.getElementById('envelope-screen');
-    const musicBtn = document.getElementById('music-toggle-btn');
 
     function showEnvelopeScreen() {
       envelopeScreen.style.display = 'flex';
-      musicBtn.style.display = 'block'; 
     }
 
-    // 5. Step 4: Click 💌 -> Play Music, Start Photo Rain & Show Letter Card
+    // 5. Step 4: Click 💌 -> Start Photo Rain & Show Letter Card
     const lockedCard = document.getElementById('locked-letter-card');
     const envelopeBtnElement = document.querySelector('.envelope-btn');
-    const music = document.getElementById('bg-music');
 
     envelopeBtnElement.addEventListener('click', () => {
       envelopeScreen.style.display = 'none';
-      
-      if (music) {
-        music.load();
-        music.play().then(() => {
-          musicBtn.innerText = "🎵 Playing...";
-        }).catch(error => {
-          console.log("Autoplay blocked:", error);
-        });
-      }
-
       setInterval(createPolaroid, 1200);
       lockedCard.style.display = 'block';
     });
-
-    // Floating Music Button Toggle
-    function toggleMusic() {
-      if (music.paused) {
-        music.play();
-        musicBtn.innerText = "🎵 Playing...";
-      } else {
-        music.pause();
-        musicBtn.innerText = "🎵 Paused";
-      }
-    }
 
     // 6. Step 5: Click 🔒 -> Unlock Message Pop-Up
     let isUnlocked = false;
