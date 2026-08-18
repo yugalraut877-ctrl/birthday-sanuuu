@@ -43,6 +43,25 @@
       overflow: hidden;
     }
 
+    /* Floating Music Fallback Button */
+    #music-toggle-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(25, 15, 35, 0.8);
+      border: 2px solid #ff758f;
+      color: #ff758f;
+      padding: 10px 15px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 20000;
+      box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+      backdrop-filter: blur(5px);
+      display: none;
+    }
+
     /* 3-2-1 Intro Splash */
     #splash-screen {
       position: fixed;
@@ -269,11 +288,14 @@
 </head>
 <body>
 
-  <!-- BACKGROUND MUSIC USING RELIABLE AUDIO STREAM SOURCE -->
+  <!-- BACKGROUND MUSIC AUDIO ELEMENT -->
   <audio id="bg-music" loop preload="auto">
     <source src="https://actions.google.com/sounds/v1/ambiences/romantic_music.ogg" type="audio/ogg">
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a8c278.mp3" type="audio/mpeg">
   </audio>
+
+  {/* Floating Music Toggle Backup Button */}
+  <button id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Music</button>
 
   <!-- MATRIX BACKGROUND -->
   <canvas id="matrix-canvas"></canvas>
@@ -283,7 +305,7 @@
 
   <!-- 3-2-1 INTRO SPLASH -->
   <div id="splash-screen">
-    <div class="splash-title">Get ready Sanuu... 🥹😘</div>
+    <div class="splash-title">Get ready Sanuu... 🥹❤️</div>
     <div id="countdown-number">3</div>
   </div>
 
@@ -312,7 +334,7 @@
         <div class="cake-hint" id="cake-hint-text">Tap the cake to make a wish & blow out candles! ✨</div>
       </div>
 
-      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center; margin-top:0;">Happy Birthday, My Bubu, Sanuu! 🥹😘</p>
+      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center; margin-top:0;">Happy Birthday, My Sanuu! 🥹❤️</p>
       
       <p>My dearest Sanuu,</p>
       
@@ -410,27 +432,28 @@
       showNextWord();
     }
 
-    // 4. Step 3: Bring Envelope 💌 Screen
+    // 4. Step 3: Bring Envelope 💌 Screen & Show Music Button Backup
     const envelopeScreen = document.getElementById('envelope-screen');
+    const musicBtn = document.getElementById('music-toggle-btn');
+
     function showEnvelopeScreen() {
       envelopeScreen.style.display = 'flex';
+      musicBtn.style.display = 'block'; // Show floating button just in case
     }
 
     // 5. Step 4: Click 💌 -> Play Music, Start Photo Rain & Show Letter Card
     const lockedCard = document.getElementById('locked-letter-card');
     const envelopeBtnElement = document.querySelector('.envelope-btn');
+    const music = document.getElementById('bg-music');
 
     envelopeBtnElement.addEventListener('click', () => {
       envelopeScreen.style.display = 'none';
       
-      // Force audio playback execution on interaction
-      const music = document.getElementById('bg-music');
       if (music) {
-        music.volume = 1.0;
         music.play().then(() => {
-          console.log("Audio playing successfully!");
+          musicBtn.innerText = "🎵 Mute/Play";
         }).catch(error => {
-          console.log("Autoplay constraint error:", error);
+          console.log("Autoplay blocked, user can tap floating button:", error);
         });
       }
 
@@ -440,6 +463,17 @@
       // Display locked letter centered
       lockedCard.style.display = 'block';
     });
+
+    // Floating Music Button Toggle Function
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerText = "🎵 Playing...";
+      } else {
+        music.pause();
+        musicBtn.innerText = "🎵 Paused";
+      }
+    }
 
     // 6. Step 5: Click 🔒 -> Unlock Message Pop-Up
     let isUnlocked = false;
@@ -503,7 +537,7 @@
 
     const captions = [
       "Sanuu 🥹", "My Happiness ✨", "Forever & Always 💖", 
-      "Best Memory 🌷", "My Girl 😋", "Cutest Smile 👑"
+      "Best Memory 🌸", "My Girl ❤️", "Cutest Smile 👑"
     ];
 
     function createPolaroid() {
@@ -536,7 +570,7 @@
     function createHeartSparkle(x, y) {
       const heart = document.createElement('div');
       heart.className = 'sparkle-heart';
-      const heartTypes = ['💖', '😋', '✨', '💕', '🥹', '🌷', '🎂', '🎉'];
+      const heartTypes = ['💖', '❤️', '✨', '💕', '🥹', '🌸', '🎂', '🎉'];
       heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
       heart.style.left = x + 'px';
       heart.style.top = y + 'px';
