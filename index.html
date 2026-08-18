@@ -17,7 +17,7 @@
       text-align: center;
     }
 
-    /* Pink Matrix Canvas Background (Always Active) */
+    /* Pink Matrix Canvas Background */
     #matrix-canvas {
       position: fixed;
       top: 0;
@@ -58,7 +58,6 @@
       animation: pop 0.8s ease-in-out infinite;
     }
 
-    /* Steady countdown animation - No shaking/scaling */
     @keyframes pop {
       0% { opacity: 0; }
       100% { opacity: 1; }
@@ -109,7 +108,6 @@
       z-index: 8000;
     }
 
-    /* Steady Envelope - Removed Pulse */
     .envelope-btn {
       font-size: 110px;
       cursor: pointer;
@@ -127,30 +125,27 @@
       font-weight: bold;
     }
 
-    /* Locked Message Card Falling from Top to Center */
+    /* FIXED & STABLE CENTERED LETTER CARD */
     #locked-letter-card {
       position: fixed;
-      top: -300px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       width: 85%;
       max-width: 420px;
-      background: rgba(25, 15, 35, 0.92);
+      height: auto;
+      max-height: 75vh;
+      background: rgba(25, 15, 35, 0.95);
       border: 2px solid #ff758f;
       box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
       border-radius: 20px;
       padding: 25px;
       z-index: 7000;
       backdrop-filter: blur(10px);
-      transition: top 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      display: none; /* Controlled by script */
+      box-sizing: border-box;
     }
 
-    #locked-letter-card.center-screen {
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* Steady Lock Icon - Removed Bounce */
     .lock-icon-btn {
       font-size: 60px;
       cursor: pointer;
@@ -159,7 +154,7 @@
       user-select: none;
     }
 
-    /* Love Letter Content Inside Card */
+    /* Scrollable Inner Message Content */
     #letter-content {
       display: none;
       color: #fff0f3;
@@ -168,9 +163,9 @@
       line-height: 1.8;
       text-align: left;
       margin-top: 15px;
-      max-height: 60vh;
+      max-height: 50vh;
       overflow-y: auto;
-      padding-right: 5px;
+      padding-right: 8px;
     }
 
     /* Photo Rain */
@@ -342,8 +337,8 @@
           setTimeout(() => {
             flashWord.classList.remove('active');
             index++;
-            setTimeout(showNextWord, 200); // Pause before next word
-          }, 1100); // Word visible duration
+            setTimeout(showNextWord, 200);
+          }, 1100);
         } else {
           flashOverlay.style.display = 'none';
           showEnvelopeScreen();
@@ -359,7 +354,7 @@
       envelopeScreen.style.display = 'flex';
     }
 
-    // 5. Step 4: Click 💌 -> Start Photo Rain & Bring Locked Letter Down
+    // 5. Step 4: Click 💌 -> Start Photo Rain & Show Letter Card
     const lockedCard = document.getElementById('locked-letter-card');
     function openEnvelope() {
       envelopeScreen.style.display = 'none';
@@ -367,10 +362,8 @@
       // Start Photo Rain
       setInterval(createPolaroid, 1200);
 
-      // Bring Locked Card Down to Center
-      setTimeout(() => {
-        lockedCard.classList.add('center-screen');
-      }, 300);
+      // Display locked letter centered
+      lockedCard.style.display = 'block';
     }
 
     // 6. Step 5: Click 🔒 -> Unlock Message Pop-Up
