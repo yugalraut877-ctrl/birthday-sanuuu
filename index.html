@@ -420,10 +420,14 @@
     function openEnvelope() {
       envelopeScreen.style.display = 'none';
       
-      // PLAY BACKGROUND MUSIC ON TAP
+      // FIXED: Ensure background music plays immediately upon tapping the envelope
       const music = document.getElementById('bg-music');
       if (music) {
-        music.play().catch(e => console.log("Audio play blocked:", e));
+        music.play().then(() => {
+          console.log("Music started successfully!");
+        }).catch(e => {
+          console.log("Audio play blocked or failed:", e);
+        });
       }
 
       // Start Photo Rain
