@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday To You Sanuu! ❤️</title>
+  <title>Happy Birthday To You Sanuu! 😚</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -77,15 +77,15 @@
 </head>
 <body>
 
-  <!-- Audio Background with Reliable Sound Link -->
+  <!-- Audio Background Link -->
   <audio id="bg-music" loop preload="auto">
-  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+    <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sun-683.mp3" type="audio/mpeg">
   </audio>
 
   <canvas id="matrix"></canvas>
 
   <div class="container">
-    <div id="text-display" class="big-text">Tap anywhere to start! ✨</div>
+    <div id="text-display" class="big-text">3</div>
 
     <div id="cake-box" class="cake-box" onclick="blowCandle()">
       <p style="color: #ff2a85; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px;">Tap the candle to blow it out! 🎂</p>
@@ -98,29 +98,36 @@
   </div>
 
   <script>
-    // Make sure these filenames match the EXACT image filenames inside your GitHub repository!
-    // Example: if your photos on GitHub are named '1.jpg', '2.jpg', update the array below accordingly.
     const photos = [
-  'photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg', 'photo5.jpg',
-  'photo6.jpg', 'photo7.jpg', 'photo8.jpg', 'photo9.jpg', 'photo10.jpg',
-  'photo11.jpg', 'photo12.jpg', 'photo13.jpg', 'photo14.jpg'
-];
+      'photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg', 'photo5.jpg',
+      'photo6.jpg', 'photo7.jpg', 'photo8.jpg', 'photo9.jpg', 'photo10.jpg',
+      'photo11.jpg', 'photo12.jpg', 'photo13.jpg', 'photo14.jpg'
+    ];
 
     let started = false;
 
-    document.body.addEventListener('click', () => {
+    // Starts countdown immediately, audio plays on first touch/interaction
+    function init() {
       if (!started) {
         started = true;
         const audio = document.getElementById('bg-music');
-        audio.play().catch(err => console.log('Audio playback waiting for interaction', err));
+        audio.play().catch(() => {});
         startCountdown();
       }
-    });
+    }
+
+    document.body.addEventListener('click', init);
+    document.body.addEventListener('touchstart', init);
+
+    // Auto start countdown immediately on load
+    window.onload = () => {
+      startCountdown();
+    };
 
     const textDisplay = document.getElementById('text-display');
 
     function startCountdown() {
-      const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "YOU", "SANUU! ❤️"];
+      const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "YOU", "SANUU! 😚"];
       let index = 0;
 
       const interval = setInterval(() => {
@@ -166,7 +173,7 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const chars = 'SANUUUHAPPYBIRTHDAYTOYOU1234567890❤️';
+    const chars = 'SANUUUHAPPYBIRTHDAYTOYOU1234567890😚';
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
