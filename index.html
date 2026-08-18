@@ -17,7 +17,7 @@
       text-align: center;
     }
 
-    /* Pink Matrix Canvas Background (Always visible across entire site) */
+    /* Pink Matrix Canvas Background (Always Active) */
     #matrix-canvas {
       position: fixed;
       top: 0;
@@ -28,14 +28,14 @@
       pointer-events: none;
     }
 
-    /* 3-2-1 Intro Overlay (Semi-transparent so Matrix rain shows through) */
+    /* Step 1: 3-2-1 Intro Splash Overlay */
     #splash-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(13, 10, 26, 0.6);
+      background: rgba(13, 10, 26, 0.7);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -64,26 +64,97 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* Main Content Area */
+    /* Main Container */
     #main-content {
       display: none;
       opacity: 0;
-      transition: opacity 1.2s ease-in-out;
+      transition: opacity 1s ease-in-out;
       position: relative;
       z-index: 5;
+      padding-bottom: 50px;
     }
 
+    /* Step 2: Main Header Title */
     .header-title {
       margin-top: 30px;
       font-size: 28px;
       font-weight: bold;
       color: #ff758f;
       text-shadow: 0 0 15px rgba(255, 117, 143, 0.6);
-      position: relative;
-      z-index: 10;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in;
     }
 
-    /* Floating Polaroid Photo Styling */
+    /* Step 3: Interactive Cake Section */
+    #cake-section {
+      margin: 30px auto 10px auto;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    .cake-icon {
+      font-size: 80px;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    .cake-icon:active { transform: scale(0.9); }
+
+    .cake-hint {
+      font-size: 15px;
+      color: #ffb3c1;
+      margin-top: 5px;
+    }
+
+    /* Step 4: Letter Envelope & Hidden Love Letter */
+    #letter-section {
+      text-align: center;
+      margin: 30px auto 40px auto;
+      padding: 25px;
+      max-width: 500px;
+      width: 85%;
+      background: rgba(20, 15, 35, 0.85);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 182, 193, 0.4);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    #open-letter-btn {
+      background: linear-gradient(45deg, #ff4d6d, #ff758f);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 77, 109, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    #open-letter-btn:active { transform: scale(0.96); }
+
+    #letter-content {
+      display: none;
+      margin-top: 25px;
+      color: #fff0f3;
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: left;
+      padding: 10px;
+      border-top: 1px dashed rgba(255, 182, 193, 0.3);
+    }
+
+    /* Step 5: Floating Polaroid Photo Rain */
     .polaroid {
       position: absolute;
       background: #ffffff;
@@ -119,72 +190,6 @@
       100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Interactive Cake Styling */
-    #cake-section {
-      margin: 20px auto 10px auto;
-      position: relative;
-      z-index: 10;
-    }
-
-    .cake-icon {
-      font-size: 70px;
-      cursor: pointer;
-      display: inline-block;
-      transition: transform 0.2s ease;
-      user-select: none;
-    }
-
-    .cake-icon:active { transform: scale(0.9); }
-
-    .cake-hint {
-      font-size: 14px;
-      color: #ffb3c1;
-      margin-top: 5px;
-    }
-
-    /* Hidden Love Letter Section */
-    #letter-section {
-      text-align: center;
-      margin: 40px auto 60px auto;
-      padding: 25px;
-      max-width: 500px;
-      width: 85%;
-      background: rgba(20, 15, 35, 0.85);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 182, 193, 0.4);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
-      position: relative;
-      z-index: 10;
-    }
-
-    #open-letter-btn {
-      background: linear-gradient(45deg, #ff4d6d, #ff758f);
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      border-radius: 30px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(255, 77, 109, 0.5);
-      transition: transform 0.2s ease;
-    }
-
-    #open-letter-btn:active { transform: scale(0.96); }
-
-    #letter-content {
-      display: none;
-      margin-top: 25px;
-      color: #fff0f3;
-      font-family: 'Georgia', serif;
-      font-size: 16px;
-      line-height: 1.8;
-      text-align: left;
-      padding: 10px;
-      border-top: 1px dashed rgba(255, 182, 193, 0.3);
-    }
-
     /* Touch Sparkles Effect */
     .sparkle-heart {
       position: fixed;
@@ -203,26 +208,30 @@
 </head>
 <body>
 
-  <!-- MATRIX CODE RAIN BACKGROUND (Always Active) -->
+  <!-- MATRIX CODE RAIN BACKGROUND -->
   <canvas id="matrix-canvas"></canvas>
 
-  <!-- 3-2-1 INTRO SPLASH -->
+  <!-- STEP 1: 3-2-1 INTRO SPLASH -->
   <div id="splash-screen">
     <div class="splash-title">Get ready Sanuu... 🥹❤️</div>
     <div id="countdown-number">3</div>
   </div>
 
-  <!-- MAIN SURPRISE CONTENT -->
+  <!-- MAIN CONTAINER -->
   <div id="main-content">
-    <h1 class="header-title">Happy Birthday to You Sanuu 🥹</h1>
+    
+    <!-- STEP 2: HAPPY BIRTHDAY TITLE -->
+    <h1 class="header-title" id="birthday-title">Happy Birthday to You Sanuu 🥹</h1>
 
+    <!-- STEP 3: CAKE SECTION -->
     <div id="cake-section">
       <div class="cake-icon" id="cake" onclick="blowCandles()">🎂</div>
       <div class="cake-hint" id="cake-status">Tap the cake to make a wish & blow candles! ✨</div>
     </div>
 
+    <!-- STEP 4: ENVELOPE POP-UP & LETTER -->
     <div id="letter-section">
-      <button id="open-letter-btn" onclick="toggleLetter()">
+      <button id="open-letter-btn" onclick="openEnvelopeAndStartRain()">
         💌 Tap to Open My Message
       </button>
       
@@ -242,10 +251,11 @@
         </p>
       </div>
     </div>
+
   </div>
 
   <script>
-    // 1. Pink Matrix Rain Canvas Effect (Runs immediately on load)
+    // 1. Matrix Background Code Rain
     const canvas = document.getElementById('matrix-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -280,11 +290,14 @@
     }
     setInterval(drawMatrix, 33);
 
-    // 2. 3-2-1 Intro Countdown Logic
+    // 2. Step-by-Step Flow Control
     let count = 3;
     const countElement = document.getElementById('countdown-number');
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
+    const birthdayTitle = document.getElementById('birthday-title');
+    const cakeSection = document.getElementById('cake-section');
+    const letterSection = document.getElementById('letter-section');
 
     const splashInterval = setInterval(() => {
       count--;
@@ -294,14 +307,72 @@
         countElement.innerText = "❤️";
       } else {
         clearInterval(splashInterval);
+        
+        // Hide Splash
         splashScreen.style.display = 'none';
         mainContent.style.display = 'block';
         setTimeout(() => { mainContent.style.opacity = '1'; }, 50);
-        setInterval(createPolaroid, 1200);
+
+        // Step 1 Finish -> Show Title
+        setTimeout(() => {
+          birthdayTitle.style.display = 'block';
+          setTimeout(() => { birthdayTitle.style.opacity = '1'; }, 50);
+        }, 500);
+
+        // Step 2 -> Bring Cake to Screen
+        setTimeout(() => {
+          cakeSection.style.display = 'block';
+          setTimeout(() => { cakeSection.style.opacity = '1'; }, 50);
+        }, 1500);
       }
     }, 1000);
 
-    // 3. Photo Rain Setup
+    // Step 3: Blow Candle & Pop Up Letter Button
+    let cakeBlown = false;
+    function blowCandles() {
+      const status = document.getElementById('cake-status');
+      if(!cakeBlown) {
+        status.innerText = "🎂 Wish made! Candles blown out! 🎉💖";
+        
+        // Burst Sparkles around cake
+        for(let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const x = window.innerWidth / 2 + (Math.random() * 200 - 100);
+            const y = 200 + (Math.random() * 100 - 50);
+            createHeartSparkle(x, y);
+          }, i * 40);
+        }
+        cakeBlown = true;
+
+        // Pop Up Envelope / Letter Section
+        setTimeout(() => {
+          letterSection.style.display = 'block';
+          setTimeout(() => { letterSection.style.opacity = '1'; }, 50);
+        }, 1000);
+      }
+    }
+
+    // Step 4: Click 💌 -> Start Floating Photo Rain & Open Love Letter
+    let rainStarted = false;
+    function openEnvelopeAndStartRain() {
+      const content = document.getElementById('letter-content');
+      const btn = document.getElementById('open-letter-btn');
+
+      if (!rainStarted) {
+        setInterval(createPolaroid, 1200); // Start Photo Rain from top
+        rainStarted = true;
+      }
+
+      if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        btn.innerText = '🔒 Close Message';
+      } else {
+        content.style.display = 'none';
+        btn.innerText = '💌 Tap to Open My Message';
+      }
+    }
+
+    // Step 5: Photo Rain Array Setup
     const photos = [
       'IMG-20251126-WA0001.jpg',
       'IMG-20251126-WA0002.jpg',
@@ -350,40 +421,7 @@
       }, duration * 1000);
     }
 
-    // 4. Interactive Cake Feature
-    let cakeBlown = false;
-    function blowCandles() {
-      const status = document.getElementById('cake-status');
-      if(!cakeBlown) {
-        status.innerText = "🎂 Your wish has been made! Happy Birthday Sanuu! 🎉💖";
-        for(let i = 0; i < 25; i++) {
-          setTimeout(() => {
-            const x = window.innerWidth / 2 + (Math.random() * 200 - 100);
-            const y = 150 + (Math.random() * 100 - 50);
-            createHeartSparkle(x, y);
-          }, i * 50);
-        }
-        cakeBlown = true;
-      } else {
-        status.innerText = "✨ Candles re-lit! Tap to make another wish! ✨";
-        cakeBlown = false;
-      }
-    }
-
-    // 5. Toggle Love Letter
-    function toggleLetter() {
-      const content = document.getElementById('letter-content');
-      const btn = document.getElementById('open-letter-btn');
-      if (content.style.display === 'none' || content.style.display === '') {
-        content.style.display = 'block';
-        btn.innerText = '🔒 Close Message';
-      } else {
-        content.style.display = 'none';
-        btn.innerText = '💌 Tap to Open My Message';
-      }
-    }
-
-    // 6. Touch Sparkles Effect
+    // Interactive Touch Sparkles
     function createHeartSparkle(x, y) {
       const heart = document.createElement('div');
       heart.className = 'sparkle-heart';
