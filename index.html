@@ -58,13 +58,13 @@
       animation: pop 0.8s ease-in-out infinite;
     }
 
+    /* Steady countdown animation - No shaking/scaling */
     @keyframes pop {
-      0% { transform: scale(0.6); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
-    /* Big Text Flash Screen (FULL SCREEN) */
+    /* Full Screen Text Flash Overlay */
     #text-flash-overlay {
       position: fixed;
       top: 0;
@@ -86,13 +86,13 @@
       text-transform: uppercase;
       text-shadow: 0 0 25px #ff758f, 0 0 50px #ff4d6d;
       opacity: 0;
-      transform: scale(0.5);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform: scale(1);
+      transition: opacity 0.3s ease-in-out;
     }
 
     .flash-word.active {
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1);
     }
 
     /* Envelope Button Overlay */
@@ -109,28 +109,22 @@
       z-index: 8000;
     }
 
+    /* Steady Envelope - Removed Pulse */
     .envelope-btn {
       font-size: 110px;
       cursor: pointer;
-      animation: pulse 1.5s infinite;
       user-select: none;
       filter: drop-shadow(0 0 20px #ff4d6d);
       transition: transform 0.2s ease;
     }
 
-    .envelope-btn:active { transform: scale(0.85); }
+    .envelope-btn:active { transform: scale(0.9); }
 
     .envelope-hint {
       font-size: 18px;
       color: #ffb3c1;
       margin-top: 15px;
       font-weight: bold;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
     }
 
     /* Locked Message Card Falling from Top to Center */
@@ -156,19 +150,13 @@
       transform: translate(-50%, -50%);
     }
 
+    /* Steady Lock Icon - Removed Bounce */
     .lock-icon-btn {
       font-size: 60px;
       cursor: pointer;
       display: inline-block;
       margin-bottom: 10px;
-      animation: bounce 2s infinite;
       user-select: none;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-15px); }
-      60% { transform: translateY(-7px); }
     }
 
     /* Love Letter Content Inside Card */
@@ -354,8 +342,8 @@
           setTimeout(() => {
             flashWord.classList.remove('active');
             index++;
-            setTimeout(showNextWord, 300); // Pause before next word
-          }, 1000); // Word visible duration
+            setTimeout(showNextWord, 200); // Pause before next word
+          }, 1100); // Word visible duration
         } else {
           flashOverlay.style.display = 'none';
           showEnvelopeScreen();
