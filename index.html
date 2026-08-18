@@ -289,9 +289,9 @@
 </head>
 <body>
 
-  <!-- BACKGROUND MUSIC USING DIRECT EXPORT LINK -->
+  <!-- BACKGROUND MUSIC AUDIO ELEMENT -->
   <audio id="bg-music" loop preload="auto">
-    <source src="https://docs.google.com/uc?export=download&id=1Dt6h_QdbhdgK5yf_L_cizzz8DzHJLSjc" type="audio/mpeg">
+    <source src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" type="audio/ogg">
   </audio>
 
   <!-- Floating Music Toggle Button -->
@@ -441,7 +441,7 @@
       musicBtn.style.display = 'block'; 
     }
 
-    // 5. Step 4: Click 💌 -> Play Music with load(), Start Photo Rain & Show Letter Card
+    // 5. Step 4: Click 💌 -> Play Music, Start Photo Rain & Show Letter Card
     const lockedCard = document.getElementById('locked-letter-card');
     const envelopeBtnElement = document.querySelector('.envelope-btn');
     const music = document.getElementById('bg-music');
@@ -450,7 +450,7 @@
       envelopeScreen.style.display = 'none';
       
       if (music) {
-        music.load(); // Forces mobile browsers to load and ready the track immediately
+        music.load();
         music.play().then(() => {
           musicBtn.innerText = "🎵 Playing...";
         }).catch(error => {
