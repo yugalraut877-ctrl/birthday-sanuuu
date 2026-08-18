@@ -3,99 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday To You Sanuu! ❤️</title>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <title>Happy Birthday Sanuu 🥹</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Base Setup & Romantic Dark Background */
     body {
-      background: #000;
+      margin: 0;
+      padding: 0;
+      background: #0f0c20;
       color: #fff;
-      font-family: 'Courier New', monospace;
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      text-align: center;
     }
 
-    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-    .container { position: relative; z-index: 10; text-align: center; width: 100%; max-width: 600px; padding: 20px; }
-
-    /* Matrix & Countdown Text */
-    .big-text {
-      font-size: 3.5rem;
+    /* Top Title Header */
+    .header-title {
+      margin-top: 30px;
+      font-size: 28px;
       font-weight: bold;
-      color: #ff2a85;
-      text-shadow: 0 0 20px #ff2a85;
-      animation: popIn 0.5s ease-in-out;
+      color: #ff758f;
+      text-shadow: 0 0 15px rgba(255, 117, 143, 0.6);
+      position: relative;
+      z-index: 10;
     }
 
-    @keyframes popIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Interactive Emoji Cake */
-    .cake-box { display: none; cursor: pointer; text-align: center; margin-top: 20px; }
-    .cake-emoji {
-      font-size: 7rem;
-      display: inline-block;
-      animation: bounce 1.5s infinite alternate;
-      user-select: none;
-    }
-
-    @keyframes bounce {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-15px) scale(1.05); }
-    }
-
-    /* Floating Photo Rain */
-    .photo-rain {
-      position: fixed;
-      top: -150px;
-      width: 110px;
-      background: #fff;
-      padding: 6px 6px 20px 6px;
-      box-shadow: 0 0 15px rgba(255, 42, 133, 0.6);
-      border-radius: 6px;
-      animation: fall 7s linear infinite;
-      z-index: 5;
+    /* Floating Polaroid Photo Styling */
+    .polaroid {
+      position: absolute;
+      background: #ffffff;
+      padding: 10px 10px 25px 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      border-radius: 4px;
+      text-align: center;
+      width: 130px;
       pointer-events: none;
+      animation: fall linear infinite;
+      z-index: 1;
     }
-    .photo-rain img {
+
+    .polaroid img {
       width: 100%;
-      height: 100px;
+      height: 130px;
       object-fit: cover;
-      border-radius: 3px;
-      display: block;
+      border-radius: 2px;
+    }
+
+    .polaroid .caption {
+      font-family: 'Comic Sans MS', 'Caveat', cursive, sans-serif;
+      color: #333;
+      font-size: 12px;
+      margin-top: 6px;
+      font-weight: bold;
     }
 
     @keyframes fall {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(-150px) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Heart Sparkle Animation for Touch Effects */
+    .sparkle-heart {
+      position: fixed;
+      pointer-events: none;
+      font-size: 20px;
+      animation: floatUp 1.2s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.6);
+      }
+      50% {
+        opacity: 0.9;
+        transform: translate(-50%, -80px) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -130px) scale(0.8);
+      }
+    }
+
+    /* Birthday Cake Section */
+    #cake-section {
+      margin: 20px auto 10px auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .cake-icon {
+      font-size: 70px;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    .cake-icon:active {
+      transform: scale(0.9);
+    }
+
+    .cake-hint {
+      font-size: 14px;
+      color: #ffb3c1;
+      margin-top: 5px;
+    }
+
+    /* Hidden Love Letter Glass Container */
+    #letter-section {
+      text-align: center;
+      margin: 40px auto 60px auto;
+      padding: 25px;
+      max-width: 500px;
+      width: 85%;
+      background: rgba(20, 15, 35, 0.75);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 182, 193, 0.4);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+      position: relative;
+      z-index: 10;
+    }
+
+    #open-letter-btn {
+      background: linear-gradient(45deg, #ff4d6d, #ff758f);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 77, 109, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    #open-letter-btn:active {
+      transform: scale(0.96);
+    }
+
+    #letter-content {
+      display: none;
+      margin-top: 25px;
+      color: #fff0f3;
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: left;
+      padding: 10px;
+      border-top: 1px dashed rgba(255, 182, 193, 0.3);
     }
   </style>
 </head>
 <body>
 
-  <!-- Audio Background Link -->
-  <audio id="bg-music" loop preload="auto">
-    <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sun-683.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Main Title Header with Emoji -->
+  <h1 class="header-title">Happy Birthday to You Sanuu 🥹</h1>
 
-  <canvas id="matrix"></canvas>
+  <!-- Interactive Birthday Cake Section -->
+  <div id="cake-section">
+    <div class="cake-icon" id="cake" onclick="blowCandles()">🎂</div>
+    <div class="cake-hint" id="cake-status">Tap the cake to make a wish & blow candles! ✨</div>
+  </div>
 
-  <div class="container">
-    <div id="text-display" class="big-text">3</div>
-
-    <div id="cake-box" class="cake-box" onclick="blowCandle()">
-      <p style="color: #ff2a85; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px;">Tap the cake! 🎂</p>
-      <div class="cake-emoji">🎂</div>
+  <!-- Love Letter Section -->
+  <div id="letter-section">
+    <button id="open-letter-btn" onclick="toggleLetter()">
+      💌 Tap to Open My Message
+    </button>
+    
+    <div id="letter-content">
+      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center;">Happy Birthday, My Sanuu! 🥹❤️</p>
+      
+      <p>My dearest Sanuu,</p>
+      
+      <p>Words will never be enough to express how much you mean to me. Having you in my life is the best thing that ever happened to me, and every single moment with you feels like a blessing.</p>
+      
+      <p>Your beautiful smile lights up my darkest days, and your warmth makes everything feel peaceful and safe. Every photo floating on this screen is a piece of my favorite memories with you—memories that I will cherish forever.</p>
+      
+      <p>On your special day, I just want to remind you how deeply and truly you are loved. I wish you endless happiness, beautiful smiles, and every single dream of yours coming true. Thank you for being my happiness, my safe place, and my favorite person.</p>
+      
+      <p style="text-align: right; font-weight: bold; color: #ff758f; margin-top: 20px; font-size: 18px;">
+        Forever & Always,<br>Yours Yugal 💕
+      </p>
     </div>
   </div>
 
   <script>
-            const photos = [
+    // 1. Photo Array Setup (All 15 Files)
+    const photos = [
       'IMG-20251126-WA0001.jpg',
       'IMG-20251126-WA0002.jpg',
       'IMG-20260502-WA0008.jpg',
@@ -113,90 +220,98 @@
       'photo1.jpg'
     ];
 
-    let started = false;
+    const captions = [
+      "Sanuu 🥹", "My Happiness ✨", "Forever & Always 💖", 
+      "Best Memory 🌸", "My Girl ❤️", "Cutest Smile 👑"
+    ];
 
-    function init() {
-      if (!started) {
-        started = true;
-        const audio = document.getElementById('bg-music');
-        audio.play().catch(() => {});
+    // 2. Spawn Falling Polaroid Photos
+    function createPolaroid() {
+      const polaroid = document.createElement('div');
+      polaroid.className = 'polaroid';
+
+      const img = document.createElement('img');
+      const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
+      img.src = randomPhoto;
+
+      const caption = document.createElement('div');
+      caption.className = 'caption';
+      caption.innerText = captions[Math.floor(Math.random() * captions.length)];
+
+      polaroid.appendChild(img);
+      polaroid.appendChild(caption);
+
+      polaroid.style.left = Math.random() * 80 + 5 + 'vw';
+      const duration = Math.random() * 4 + 6;
+      polaroid.style.animationDuration = duration + 's';
+
+      document.body.appendChild(polaroid);
+
+      setTimeout(() => {
+        polaroid.remove();
+      }, duration * 1000);
+    }
+
+    setInterval(createPolaroid, 1200);
+
+    // 3. Interactive Cake Blow Feature
+    let cakeBlown = false;
+    function blowCandles() {
+      const status = document.getElementById('cake-status');
+      if(!cakeBlown) {
+        status.innerText = "🎂 Your wish has been made! Happy Birthday Sanuu! 🎉💖";
+        for(let i = 0; i < 25; i++) {
+          setTimeout(() => {
+            const x = window.innerWidth / 2 + (Math.random() * 200 - 100);
+            const y = 150 + (Math.random() * 100 - 50);
+            createHeartSparkle(x, y);
+          }, i * 50);
+        }
+        cakeBlown = true;
+      } else {
+        status.innerText = "✨ Candles re-lit! Tap to make another wish! ✨";
+        cakeBlown = false;
       }
     }
 
-    document.body.addEventListener('click', init);
-    document.body.addEventListener('touchstart', init);
-
-    window.onload = () => {
-      startCountdown();
-    };
-
-    const textDisplay = document.getElementById('text-display');
-
-    function startCountdown() {
-      const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "YOU", "SANUU! ❤️"];
-      let index = 0;
-
-      const interval = setInterval(() => {
-        if (index < sequence.length) {
-          textDisplay.innerText = sequence[index];
-          index++;
-        } else {
-          clearInterval(interval);
-          textDisplay.style.display = 'none';
-          document.getElementById('cake-box').style.display = 'block';
-        }
-      }, 1000);
+    // 4. Toggle Love Letter
+    function toggleLetter() {
+      const content = document.getElementById('letter-content');
+      const btn = document.getElementById('open-letter-btn');
+      if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        btn.innerText = '🔒 Close Message';
+      } else {
+        content.style.display = 'none';
+        btn.innerText = '💌 Tap to Open My Message';
+      }
     }
 
-    function blowCandle() {
-      confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 } });
+    // 5. Touch/Tap Heart Sparkles Effect
+    function createHeartSparkle(x, y) {
+      const heart = document.createElement('div');
+      heart.className = 'sparkle-heart';
+      const heartTypes = ['💖', '❤️', '✨', '💕', '🥹', '🌸'];
+      heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+      heart.style.left = x + 'px';
+      heart.style.top = y + 'px';
+
+      document.body.appendChild(heart);
 
       setTimeout(() => {
-        document.getElementById('cake-box').style.display = 'none';
-        startPhotoRain();
-      }, 800);
+        heart.remove();
+      }, 1200);
     }
 
-    function startPhotoRain() {
-      setInterval(() => {
-        const photo = document.createElement('div');
-        photo.classList.add('photo-rain');
-        photo.style.left = Math.random() * 85 + 'vw';
-        photo.style.animationDuration = (Math.random() * 3 + 5) + 's';
+    window.addEventListener('touchstart', (e) => {
+      for (let i = 0; i < e.touches.length; i++) {
+        createHeartSparkle(e.touches[i].clientX, e.touches[i].clientY);
+      }
+    });
 
-        const randomImg = photos[Math.floor(Math.random() * photos.length)];
-        photo.innerHTML = `<img src="${randomImg}" onerror="this.src='https://picsum.photos/200/200'" alt="Memory">`;
-
-        document.body.appendChild(photo);
-        setTimeout(() => photo.remove(), 8000);
-      }, 600);
-    }
-
-    // Matrix Background Effect
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const chars = 'SANUUUHAPPYBIRTHDAYTOYOU1234567890❤️';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function drawMatrix() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#ff2a85';
-      ctx.font = fontSize + 'px monospace';
-
-      drops.forEach((y, i) => {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, y * fontSize);
-        if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      });
-    }
-    setInterval(drawMatrix, 33);
+    window.addEventListener('click', (e) => {
+      createHeartSparkle(e.clientX, e.clientY);
+    });
   </script>
 </body>
 </html>
