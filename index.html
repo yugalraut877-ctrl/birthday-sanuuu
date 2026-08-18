@@ -31,7 +31,7 @@
       pointer-events: none;
     }
 
-    /* ISOLATED PHOTO RAIN CONTAINER (PREVENTS PAGE LAYOUT SHIFTS) */
+    /* ISOLATED PHOTO RAIN CONTAINER */
     #photo-rain-container {
       position: fixed;
       top: 0;
@@ -140,12 +140,12 @@
       font-weight: bold;
     }
 
-    /* COMPLETELY FROZEN LETTER CARD */
+    /* LETTER CARD CONTAINER */
     #locked-letter-card {
       position: relative;
       width: 85%;
       max-width: 420px;
-      max-height: 75vh;
+      max-height: 80vh;
       background: rgba(25, 15, 35, 0.95);
       border: 2px solid #ff758f;
       box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
@@ -155,8 +155,6 @@
       backdrop-filter: blur(10px);
       display: none;
       box-sizing: border-box;
-
-      /* Hardware layer separation */
       transform: translate3d(0, 0, 0);
       -webkit-transform: translate3d(0, 0, 0);
       contain: layout style paint;
@@ -168,6 +166,34 @@
       display: inline-block;
       margin-bottom: 10px;
       user-select: none;
+    }
+
+    /* BIRTHDAY CAKE ANIMATED STYLES */
+    .cake-container {
+      margin: 10px auto 15px auto;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .cake-emoji {
+      font-size: 70px;
+      filter: drop-shadow(0 0 15px #ff758f);
+      animation: pulse 1.5s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .cake-hint {
+      font-size: 12px;
+      color: #ffb3c1;
+      margin-top: 4px;
+      font-style: italic;
     }
 
     /* Inner Scrollable Message */
@@ -243,6 +269,11 @@
 </head>
 <body>
 
+  <!-- BACKGROUND MUSIC WITH ONLINE MP3 LINK -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a8c278.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- MATRIX BACKGROUND -->
   <canvas id="matrix-canvas"></canvas>
 
@@ -274,6 +305,12 @@
     </div>
 
     <div id="letter-content">
+      <!-- ANIMATED BIRTHDAY CAKE SECTION -->
+      <div class="cake-container" onclick="blowCandle()">
+        <div class="cake-emoji" id="cake-display">🎂</div>
+        <div class="cake-hint" id="cake-hint-text">Tap the cake to make a wish & blow out candles! ✨</div>
+      </div>
+
       <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center; margin-top:0;">Happy Birthday, My Sanuu! 🥹❤️</p>
       
       <p>My dearest Sanuu,</p>
@@ -378,11 +415,17 @@
       envelopeScreen.style.display = 'flex';
     }
 
-    // 5. Step 4: Click 💌 -> Start Photo Rain & Show Letter Card
+    // 5. Step 4: Click 💌 -> Play Music, Start Photo Rain & Show Letter Card
     const lockedCard = document.getElementById('locked-letter-card');
     function openEnvelope() {
       envelopeScreen.style.display = 'none';
       
+      // PLAY BACKGROUND MUSIC ON TAP
+      const music = document.getElementById('bg-music');
+      if (music) {
+        music.play().catch(e => console.log("Audio play blocked:", e));
+      }
+
       // Start Photo Rain
       setInterval(createPolaroid, 1200);
 
@@ -411,6 +454,23 @@
         }
 
         isUnlocked = true;
+      }
+    }
+
+    // Interactive Cake blowing feature
+    function blowCandle() {
+      const cakeDisplay = document.getElementById('cake-display');
+      const cakeHint = document.getElementById('cake-hint-text');
+      
+      cakeDisplay.innerText = '🍰✨';
+      cakeHint.innerText = 'Wish made! May all your dreams come true Sanuu! 🥳💖';
+      
+      for(let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const x = Math.random() * window.innerWidth;
+          const y = Math.random() * window.innerHeight;
+          createHeartSparkle(x, y);
+        }, i * 30);
       }
     }
 
@@ -457,7 +517,6 @@
       const duration = Math.random() * 4 + 6;
       polaroid.style.animationDuration = duration + 's';
 
-      // APPEND TO SEPARATE CONTAINER INSTEAD OF BODY
       rainContainer.appendChild(polaroid);
 
       setTimeout(() => {
@@ -469,7 +528,7 @@
     function createHeartSparkle(x, y) {
       const heart = document.createElement('div');
       heart.className = 'sparkle-heart';
-      const heartTypes = ['💖', '❤️', '✨', '💕', '🥹', '🌸'];
+      const heartTypes = ['💖', '❤️', '✨', '💕', '🥹', '🌸', '🎂', '🎉'];
       heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
       heart.style.left = x + 'px';
       heart.style.top = y + 'px';
