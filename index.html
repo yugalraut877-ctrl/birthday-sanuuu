@@ -278,7 +278,7 @@
 
   <!-- 3-2-1 INTRO SPLASH -->
   <div id="splash-screen">
-    <div class="splash-title">Get ready Sanuu... 🥹❤️</div>
+    <div class="splash-title">Get ready Sanuu... 🥹😘</div>
     <div id="countdown-number">3</div>
   </div>
 
@@ -293,7 +293,7 @@
     <div class="envelope-hint">Tap the letter Sanuu! 🥹</div>
   </div>
 
-  <!-- LOCKED LOVE LETTER CARD WITH BULLETPROOF VISIBLE AUDIO PLAYER -->
+  <!-- LOCKED LOVE LETTER CARD -->
   <div id="locked-letter-card">
     <div id="lock-header">
       <div class="lock-icon-btn" id="lock-btn" onclick="unlockMessage()">🔒</div>
@@ -301,22 +301,13 @@
     </div>
 
     <div id="letter-content">
-      <!-- NATIVE CONTROLS GUARANTEED MOBILE MUSIC PLAYER -->
-      <div style="background: rgba(255,117,143,0.15); border: 1px solid #ff758f; padding: 10px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
-        <p style="margin: 0 0 8px 0; font-size: 13px; color: #ffb3c1; font-family: sans-serif; font-weight: bold;">🎵 Tap play for your birthday song:</p>
-        <audio controls loop style="width: 100%; height: 35px;">
-          <source src="https://docs.google.com/uc?export=download&id=1Dt6h_QdbhdgK5yf_L_cizzz8DzHJLSjc" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-
       <!-- ANIMATED BIRTHDAY CAKE SECTION -->
       <div class="cake-container" onclick="blowCandle()">
         <div class="cake-emoji" id="cake-display">🎂</div>
         <div class="cake-hint" id="cake-hint-text">Tap the cake to make a wish & blow out candles! ✨</div>
       </div>
 
-      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center; margin-top:0;">Happy Birthday, My Sanuu! 🥹❤️</p>
+      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center; margin-top:0;">Happy Birthday, My Bubu Sanuu! 🥹😚</p>
       
       <p>My dearest Sanuu,</p>
       
@@ -492,7 +483,7 @@
 
     const captions = [
       "Sanuu 🥹", "My Happiness ✨", "Forever & Always 💖", 
-      "Best Memory 🌸", "My Girl ❤️", "Cutest Smile 👑"
+      "Best Memory 🌷", "My Girl 😋", "Cutest Smile 👑"
     ];
 
     function createPolaroid() {
@@ -525,7 +516,7 @@
     function createHeartSparkle(x, y) {
       const heart = document.createElement('div');
       heart.className = 'sparkle-heart';
-      const heartTypes = ['💖', '❤️', '✨', '💕', '🥹', '🌸', '🎂', '🎉'];
+      const heartTypes = ['💖', '😋', '✨', '💕', '🥹', '🌷', '🎂', '🎉'];
       heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
       heart.style.left = x + 'px';
       heart.style.top = y + 'px';
