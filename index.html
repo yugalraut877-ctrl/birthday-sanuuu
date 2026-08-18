@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Sanuu 🥹</title>
+  <title>Birthday Countdown for Sanuu 🥹</title>
   <style>
-    /* Base Setup & Romantic Dark Background */
+    /* Old Glowing Background Setup */
     body {
       margin: 0;
       padding: 0;
-      background: #0f0c20;
+      background: #0d0a1a;
       color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow-x: hidden;
@@ -18,7 +18,351 @@
       text-align: center;
     }
 
-    /* Top Title Header */
+    /* Countdown Container */
+    #countdown-section {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+      width: 90%;
+      max-width: 450px;
+    }
+
+    .countdown-title {
+      font-size: 22px;
+      color: #ff758f;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(255, 117, 143, 0.5);
+    }
+
+    .timer-box {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .time-unit {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 117, 143, 0.3);
+      border-radius: 12px;
+      padding: 12px 10px;
+      min-width: 65px;
+      backdrop-filter: blur(5px);
+    }
+
+    .time-num {
+      font-size: 26px;
+      font-weight: bold;
+      color: #ff4d6d;
+    }
+
+    .time-label {
+      font-size: 11px;
+      color: #ccc;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* Main Content (Hidden until countdown finishes) */
+    #main-content {
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    /* Header Title */
+    .header-title {
+      margin-top: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #ff758f;
+      text-shadow: 0 0 15px rgba(255, 117, 143, 0.6);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Floating Polaroid Photo Styling */
+    .polaroid {
+      position: absolute;
+      background: #ffffff;
+      padding: 10px 10px 25px 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      border-radius: 4px;
+      text-align: center;
+      width: 130px;
+      pointer-events: none;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .polaroid .caption {
+      font-family: 'Comic Sans MS', 'Caveat', cursive, sans-serif;
+      color: #333;
+      font-size: 12px;
+      margin-top: 6px;
+      font-weight: bold;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-150px) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Touch Sparkles */
+    .sparkle-heart {
+      position: fixed;
+      pointer-events: none;
+      font-size: 20px;
+      animation: floatUp 1.2s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(0.6); }
+      50% { opacity: 0.9; transform: translate(-50%, -80px) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -130px) scale(0.8); }
+    }
+
+    /* Birthday Cake Section */
+    #cake-section {
+      margin: 20px auto 10px auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .cake-icon {
+      font-size: 70px;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    .cake-icon:active { transform: scale(0.9); }
+
+    .cake-hint {
+      font-size: 14px;
+      color: #ffb3c1;
+      margin-top: 5px;
+    }
+
+    /* Hidden Love Letter Container */
+    #letter-section {
+      text-align: center;
+      margin: 40px auto 60px auto;
+      padding: 25px;
+      max-width: 500px;
+      width: 85%;
+      background: rgba(20, 15, 35, 0.75);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 182, 193, 0.4);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+      position: relative;
+      z-index: 10;
+    }
+
+    #open-letter-btn {
+      background: linear-gradient(45deg, #ff4d6d, #ff758f);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 77, 109, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    #open-letter-btn:active { transform: scale(0.96); }
+
+    #letter-content {
+      display: none;
+      margin-top: 25px;
+      color: #fff0f3;
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: left;
+      padding: 10px;
+      border-top: 1px dashed rgba(255, 182, 193, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COUNTDOWN SECTION -->
+  <div id="countdown-section">
+    <div class="countdown-title">Counting down to Sanuu's Birthday 🥹❤️</div>
+    <div class="timer-box">
+      <div class="time-unit"><div class="time-num" id="days">00</div><div class="time-label">Days</div></div>
+      <div class="time-unit"><div class="time-num" id="hours">00</div><div class="time-label">Hours</div></div>
+      <div class="time-unit"><div class="time-num" id="minutes">00</div><div class="time-label">Mins</div></div>
+      <div class="time-unit"><div class="time-num" id="seconds">00</div><div class="time-label">Secs</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN BIRTHDAY CONTENT -->
+  <div id="main-content">
+    <h1 class="header-title">Happy Birthday to You Sanuu 🥹</h1>
+
+    <div id="cake-section">
+      <div class="cake-icon" id="cake" onclick="blowCandles()">🎂</div>
+      <div class="cake-hint" id="cake-status">Tap the cake to make a wish & blow candles! ✨</div>
+    </div>
+
+    <div id="letter-section">
+      <button id="open-letter-btn" onclick="toggleLetter()">
+        💌 Tap to Open My Message
+      </button>
+      
+      <div id="letter-content">
+        <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center;">Happy Birthday, My Sanuu! 🥹❤️</p>
+        
+        <p>My dearest Sanuu,</p>
+        
+        <p>Words will never be enough to express how much you mean to me. Having you in my life is the best thing that ever happened to me, and every single moment with you feels like a blessing.</p>
+        
+        <p>Your beautiful smile lights up my darkest days, and your warmth makes everything feel peaceful and safe. Every photo floating on this screen is a piece of my favorite memories with you—memories that I will cherish forever.</p>
+        
+        <p>On your special day, I just want to remind you how deeply and truly you are loved. I wish you endless happiness, beautiful smiles, and every single dream of yours coming true. Thank you for being my happiness, my safe place, and my favorite person.</p>
+        
+        <p style="text-align: right; font-weight: bold; color: #ff758f; margin-top: 20px; font-size: 18px;">
+          Forever & Always,<br>Yours Yugal 💕
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Set Target Birthday Date (YYYY, MM-1, DD, HH, MM, SS)
+    // Note: Month starts from 0 (e.g., May is month 4)
+    const birthdayDate = new Date(2026, 4, 15, 0, 0, 0).getTime(); 
+
+    // Photo Array Setup
+    const photos = [
+      'IMG-20251126-WA0001.jpg',
+      'IMG-20251126-WA0002.jpg',
+      'IMG-20260502-WA0008.jpg',
+      'IMG-20260510-WA0005.jpg',
+      'IMG-20260513-WA0024.jpg',
+      'IMG_20251017_175214.jpg',
+      'IMG_20251206_112243.jpg',
+      'IMG_20251206_130940.jpg',
+      'IMG_20251206_131819.jpg',
+      'IMG_20260116_125043.jpg',
+      'IMG_20260120_134146.jpg',
+      'IMG_20260120_135043.jpg',
+      'IMG_20260120_135423.jpg',
+      'IMG_20260120_135712.jpg',
+      'photo1.jpg'
+    ];
+
+    const captions = [
+      "Sanuu 🥹", "My Happiness ✨", "Forever & Always 💖", 
+      "Best Memory 🌸", "My Girl ❤️", "Cutest Smile 👑"
+    ];
+
+    // Countdown Timer Logic
+    const timerInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = birthdayDate - now;
+
+      if (distance < 0) {
+        clearInterval(timerInterval);
+        document.getElementById('countdown-section').style.display = 'none';
+        
+        const mainContent = document.getElementById('main-content');
+        mainContent.style.display = 'block';
+        setTimeout(() => { mainContent.style.opacity = '1'; }, 50);
+
+        setInterval(createPolaroid, 1200);
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((Got it, bro! Let's combine everything so that it runs in two smooth phases:
+
+1. **Countdown Phase:** Shows a big timer counting down against your original dark background.
+2. **Surprise Phase:** Once the timer hits zero, the countdown hides automatically and reveals the main **"Happy Birthday to You Sanuu 🥹"** title, interactive cake, polaroids, tap-sparkles, and love letter!
+
+Replace your entire `index.html` file with this updated structure:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Sanuu 🥹</title>
+  <style>
+    /* Original Dark Aesthetic Background */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d0a1a;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      text-align: center;
+    }
+
+    /* Countdown Display Styling */
+    #countdown-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      z-index: 20;
+    }
+
+    .countdown-title {
+      font-size: 26px;
+      color: #ff758f;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(255, 117, 143, 0.5);
+    }
+
+    #timer {
+      font-size: 42px;
+      font-weight: bold;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 20px 30px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 182, 193, 0.3);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+      letter-spacing: 2px;
+    }
+
+    /* Surprise Birthday Main Container */
+    #birthday-main {
+      display: none; /* Stays hidden until countdown ends */
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Title Styling */
     .header-title {
       margin-top: 30px;
       font-size: 28px;
@@ -71,31 +415,7 @@
       }
     }
 
-    /* Heart Sparkle Animation for Touch Effects */
-    .sparkle-heart {
-      position: fixed;
-      pointer-events: none;
-      font-size: 20px;
-      animation: floatUp 1.2s ease-out forwards;
-      z-index: 9999;
-    }
-
-    @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(0.6);
-      }
-      50% {
-        opacity: 0.9;
-        transform: translate(-50%, -80px) scale(1.2);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -130px) scale(0.8);
-      }
-    }
-
-    /* Birthday Cake Section */
+    /* Interactive Cake Styling */
     #cake-section {
       margin: 20px auto 10px auto;
       position: relative;
@@ -120,7 +440,7 @@
       margin-top: 5px;
     }
 
-    /* Hidden Love Letter Glass Container */
+    /* Love Letter Container */
     #letter-section {
       text-align: center;
       margin: 40px auto 60px auto;
@@ -164,44 +484,101 @@
       padding: 10px;
       border-top: 1px dashed rgba(255, 182, 193, 0.3);
     }
+
+    /* Sparkles Effect */
+    .sparkle-heart {
+      position: fixed;
+      pointer-events: none;
+      font-size: 20px;
+      animation: floatUp 1.2s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.6);
+      }
+      50% {
+        opacity: 0.9;
+        transform: translate(-50%, -80px) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -130px) scale(0.8);
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Main Title Header with Emoji -->
-  <h1 class="header-title">Happy Birthday to You Sanuu 🥹</h1>
-
-  <!-- Interactive Birthday Cake Section -->
-  <div id="cake-section">
-    <div class="cake-icon" id="cake" onclick="blowCandles()">🎂</div>
-    <div class="cake-hint" id="cake-status">Tap the cake to make a wish & blow candles! ✨</div>
+  <!-- COUNTDOWN SECTION -->
+  <div id="countdown-container">
+    <div class="countdown-title">Counting down to Sanuu's Birthday... ⏳✨</div>
+    <div id="timer">00 : 00 : 00 : 00</div>
   </div>
 
-  <!-- Love Letter Section -->
-  <div id="letter-section">
-    <button id="open-letter-btn" onclick="toggleLetter()">
-      💌 Tap to Open My Message
-    </button>
-    
-    <div id="letter-content">
-      <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center;">Happy Birthday, My Sanuu! 🥹❤️</p>
+  <!-- SURPRISE SECTION (HIDDEN UNTIL COUNTDOWN ENDS) -->
+  <div id="birthday-main">
+    <h1 class="header-title">Happy Birthday to You Sanuu 🥹</h1>
+
+    <div id="cake-section">
+      <div class="cake-icon" id="cake" onclick="blowCandles()">🎂</div>
+      <div class="cake-hint" id="cake-status">Tap the cake to make a wish & blow candles! ✨</div>
+    </div>
+
+    <div id="letter-section">
+      <button id="open-letter-btn" onclick="toggleLetter()">
+        💌 Tap to Open My Message
+      </button>
       
-      <p>My dearest Sanuu,</p>
-      
-      <p>Words will never be enough to express how much you mean to me. Having you in my life is the best thing that ever happened to me, and every single moment with you feels like a blessing.</p>
-      
-      <p>Your beautiful smile lights up my darkest days, and your warmth makes everything feel peaceful and safe. Every photo floating on this screen is a piece of my favorite memories with you—memories that I will cherish forever.</p>
-      
-      <p>On your special day, I just want to remind you how deeply and truly you are loved. I wish you endless happiness, beautiful smiles, and every single dream of yours coming true. Thank you for being my happiness, my safe place, and my favorite person.</p>
-      
-      <p style="text-align: right; font-weight: bold; color: #ff758f; margin-top: 20px; font-size: 18px;">
-        Forever & Always,<br>Yours Yugal 💕
-      </p>
+      <div id="letter-content">
+        <p style="font-size: 20px; font-weight: bold; color: #ff758f; text-align: center;">Happy Birthday, My Sanuu! 🥹❤️</p>
+        
+        <p>My dearest Sanuu,</p>
+        
+        <p>Words will never be enough to express how much you mean to me. Having you in my life is the best thing that ever happened to me, and every single moment with you feels like a blessing.</p>
+        
+        <p>Your beautiful smile lights up my darkest days, and your warmth makes everything feel peaceful and safe. Every photo floating on this screen is a piece of my favorite memories with you—memories that I will cherish forever.</p>
+        
+        <p>On your special day, I just want to remind you how deeply and truly you are loved. I wish you endless happiness, beautiful smiles, and every single dream of yours coming true. Thank you for being my happiness, my safe place, and my favorite person.</p>
+        
+        <p style="text-align: right; font-weight: bold; color: #ff758f; margin-top: 20px; font-size: 18px;">
+          Forever & Always,<br>Yours Yugal 💕
+        </p>
+      </div>
     </div>
   </div>
 
   <script>
-    // 1. Photo Array Setup (All 15 Files)
+    // 1. SET HER BIRTHDAY DATE HERE (Year, Month Index [0-11], Day, Hour, Min)
+    // Note: Month 0 = Jan, 1 = Feb, 2 = Mar, 3 = Apr, 4 = May...
+    const birthdayTarget = new Date(2026, 4, 15, 0, 0, 0).getTime(); 
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = birthdayTarget - now;
+
+      if (difference <= 0) {
+        document.getElementById('countdown-container').style.display = 'none';
+        document.getElementById('birthday-main').style.display = 'block';
+        startPhotoRain();
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      document.getElementById('timer').innerText = 
+        `${days}d : ${hours < 10 ? '0' : ''}${hours}h : ${minutes < 10 ? '0' : ''}${minutes}m : ${seconds < 10 ? '0' : ''}${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 2. Photo Array Setup
     const photos = [
       'IMG-20251126-WA0001.jpg',
       'IMG-20251126-WA0002.jpg',
@@ -225,14 +602,12 @@
       "Best Memory 🌸", "My Girl ❤️", "Cutest Smile 👑"
     ];
 
-    // 2. Spawn Falling Polaroid Photos
     function createPolaroid() {
       const polaroid = document.createElement('div');
       polaroid.className = 'polaroid';
 
       const img = document.createElement('img');
-      const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
-      img.src = randomPhoto;
+      img.src = photos[Math.floor(Math.random() * photos.length)];
 
       const caption = document.createElement('div');
       caption.className = 'caption';
@@ -252,9 +627,11 @@
       }, duration * 1000);
     }
 
-    setInterval(createPolaroid, 1200);
+    function startPhotoRain() {
+      setInterval(createPolaroid, 1200);
+    }
 
-    // 3. Interactive Cake Blow Feature
+    // 3. Interactive Cake Feature
     let cakeBlown = false;
     function blowCandles() {
       const status = document.getElementById('cake-status');
@@ -287,7 +664,7 @@
       }
     }
 
-    // 5. Touch/Tap Heart Sparkles Effect
+    // 5. Touch Sparkles Effect
     function createHeartSparkle(x, y) {
       const heart = document.createElement('div');
       heart.className = 'sparkle-heart';
