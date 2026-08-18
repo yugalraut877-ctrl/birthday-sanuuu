@@ -11,10 +11,15 @@
       background: #0d0a1a;
       color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
       text-align: center;
+
+      /* FLEXBOX CENTERING PREVENTS TRANSFORM SHAKING */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     /* Pink Matrix Canvas Background */
@@ -125,15 +130,11 @@
       font-weight: bold;
     }
 
-    /* FIXED & STABLE CENTERED LETTER CARD */
+    /* HARD FIXED LETTER CARD WITH GPU HARDWARE ACCELERATION */
     #locked-letter-card {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      position: relative; /* Positioned by body flexbox, not transform */
       width: 85%;
       max-width: 420px;
-      height: auto;
       max-height: 75vh;
       background: rgba(25, 15, 35, 0.95);
       border: 2px solid #ff758f;
@@ -142,8 +143,14 @@
       padding: 25px;
       z-index: 7000;
       backdrop-filter: blur(10px);
-      display: none; /* Controlled by script */
+      display: none;
       box-sizing: border-box;
+
+      /* HARDWARE ISOLATION TO STOP SHAKING */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     .lock-icon-btn {
@@ -154,7 +161,7 @@
       user-select: none;
     }
 
-    /* Scrollable Inner Message Content */
+    /* STABLE INNER SCROLLING */
     #letter-content {
       display: none;
       color: #fff0f3;
@@ -165,7 +172,12 @@
       margin-top: 15px;
       max-height: 50vh;
       overflow-y: auto;
-      padding-right: 8px;
+      -webkit-overflow-scrolling: touch; /* Smooth iOS scroll */
+      scrollbar-width: none;
+    }
+
+    #letter-content::-webkit-scrollbar {
+      display: none;
     }
 
     /* Photo Rain */
