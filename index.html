@@ -17,7 +17,7 @@
       text-align: center;
     }
 
-    /* Pink Matrix Canvas Background */
+    /* Pink Matrix Canvas Background (Always visible across entire site) */
     #matrix-canvas {
       position: fixed;
       top: 0;
@@ -28,14 +28,14 @@
       pointer-events: none;
     }
 
-    /* 3-2-1 Intro Overlay */
+    /* 3-2-1 Intro Overlay (Semi-transparent so Matrix rain shows through) */
     #splash-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(13, 10, 26, 0.95);
+      background: rgba(13, 10, 26, 0.6);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -47,14 +47,14 @@
       font-size: 22px;
       color: #ff758f;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px rgba(255, 117, 143, 0.5);
+      text-shadow: 0 0 10px rgba(255, 117, 143, 0.8);
     }
 
     #countdown-number {
       font-size: 90px;
       font-weight: bold;
       color: #ff4d6d;
-      text-shadow: 0 0 30px rgba(255, 77, 109, 0.8);
+      text-shadow: 0 0 30px rgba(255, 77, 109, 1);
       animation: pop 0.8s ease-in-out infinite;
     }
 
@@ -203,7 +203,7 @@
 </head>
 <body>
 
-  <!-- MATRIX CODE RAIN BACKGROUND -->
+  <!-- MATRIX CODE RAIN BACKGROUND (Always Active) -->
   <canvas id="matrix-canvas"></canvas>
 
   <!-- 3-2-1 INTRO SPLASH -->
@@ -245,7 +245,7 @@
   </div>
 
   <script>
-    // 1. Pink Matrix Rain Canvas Effect
+    // 1. Pink Matrix Rain Canvas Effect (Runs immediately on load)
     const canvas = document.getElementById('matrix-canvas');
     const ctx = canvas.getContext('2d');
 
