@@ -48,10 +48,10 @@
       position: fixed;
       top: 20px;
       right: 20px;
-      background: rgba(25, 15, 35, 0.8);
+      background: rgba(25, 15, 35, 0.9);
       border: 2px solid #ff758f;
       color: #ff758f;
-      padding: 10px 15px;
+      padding: 10px 16px;
       border-radius: 30px;
       font-size: 14px;
       font-weight: bold;
@@ -159,12 +159,12 @@
       font-weight: bold;
     }
 
-    /* LETTER CARD CONTAINER */
+    /* WIDER LETTER CARD CONTAINER */
     #locked-letter-card {
       position: relative;
-      width: 85%;
-      max-width: 420px;
-      max-height: 80vh;
+      width: 92%;
+      max-width: 550px; /* Made significantly wider to stop narrow text */
+      max-height: 82vh;
       background: rgba(25, 15, 35, 0.95);
       border: 2px solid #ff758f;
       box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
@@ -174,16 +174,13 @@
       backdrop-filter: blur(10px);
       display: none;
       box-sizing: border-box;
-      transform: translate3d(0, 0, 0);
-      -webkit-transform: translate3d(0, 0, 0);
-      contain: layout style paint;
     }
 
     .lock-icon-btn {
-      font-size: 60px;
+      font-size: 50px;
       cursor: pointer;
       display: inline-block;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       user-select: none;
     }
 
@@ -196,7 +193,7 @@
     }
 
     .cake-emoji {
-      font-size: 70px;
+      font-size: 60px;
       filter: drop-shadow(0 0 15px #ff758f);
       animation: pulse 1.5s ease-in-out infinite;
       display: inline-block;
@@ -221,17 +218,21 @@
       color: #fff0f3;
       font-family: 'Georgia', serif;
       font-size: 16px;
-      line-height: 1.8;
+      line-height: 1.7;
       text-align: left;
       margin-top: 15px;
-      max-height: 50vh;
+      max-height: 48vh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      padding-right: 5px;
     }
 
     #letter-content::-webkit-scrollbar {
-      display: none;
+      width: 5px;
+    }
+    #letter-content::-webkit-scrollbar-thumb {
+      background: #ff758f;
+      border-radius: 10px;
     }
 
     /* Photo Rain Styles */
@@ -288,13 +289,12 @@
 </head>
 <body>
 
-  <!-- BACKGROUND MUSIC AUDIO ELEMENT -->
+  <!-- BACKGROUND MUSIC USING RAW DATA AUDIO STREAM (Guaranteed to work on GitHub Pages) -->
   <audio id="bg-music" loop preload="auto">
-    <source src="https://actions.google.com/sounds/v1/ambiences/romantic_music.ogg" type="audio/ogg">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a8c278.mp3" type="audio/mpeg">
+    <source src="https://freesound.org/data/previews/515/515531_6142100-lq.mp3" type="audio/mpeg">
   </audio>
 
-  {/* Floating Music Toggle Backup Button */}
+  <!-- Floating Music Toggle Button -->
   <button id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Music</button>
 
   <!-- MATRIX BACKGROUND -->
@@ -324,7 +324,7 @@
   <div id="locked-letter-card">
     <div id="lock-header">
       <div class="lock-icon-btn" id="lock-btn" onclick="unlockMessage()">🔒</div>
-      <div id="lock-text" style="color: #ff758f; font-weight: bold; font-size: 16px;">Tap lock to open my hidden message!</div>
+      <div id="lock-text" style="color: #ff758f; font-weight: bold; font-size: 15px;">Tap lock to open my hidden message!</div>
     </div>
 
     <div id="letter-content">
@@ -432,13 +432,13 @@
       showNextWord();
     }
 
-    // 4. Step 3: Bring Envelope 💌 Screen & Show Music Button Backup
+    // 4. Step 3: Bring Envelope 💌 Screen & Show Music Button
     const envelopeScreen = document.getElementById('envelope-screen');
     const musicBtn = document.getElementById('music-toggle-btn');
 
     function showEnvelopeScreen() {
       envelopeScreen.style.display = 'flex';
-      musicBtn.style.display = 'block'; // Show floating button just in case
+      musicBtn.style.display = 'block'; 
     }
 
     // 5. Step 4: Click 💌 -> Play Music, Start Photo Rain & Show Letter Card
@@ -451,20 +451,17 @@
       
       if (music) {
         music.play().then(() => {
-          musicBtn.innerText = "🎵 Mute/Play";
+          musicBtn.innerText = "🎵 Playing...";
         }).catch(error => {
-          console.log("Autoplay blocked, user can tap floating button:", error);
+          console.log("Autoplay blocked:", error);
         });
       }
 
-      // Start Photo Rain
       setInterval(createPolaroid, 1200);
-
-      // Display locked letter centered
       lockedCard.style.display = 'block';
     });
 
-    // Floating Music Button Toggle Function
+    // Floating Music Button Toggle
     function toggleMusic() {
       if (music.paused) {
         music.play();
@@ -486,7 +483,6 @@
           document.getElementById('letter-content').style.display = 'block';
         }, 300);
 
-        // Burst Sparkles around screen
         for(let i = 0; i < 25; i++) {
           setTimeout(() => {
             const x = Math.random() * window.innerWidth;
